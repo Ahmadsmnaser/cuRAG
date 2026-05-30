@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/curag_dummy.dir/src/main.cpp.o CMakeFiles/curag_dummy.dir/kernels/dummy_kernel.cu.o CMakeFiles/curag_dummy.dir/cmake_device_link.o -o curag_dummy   -L/usr/lib/x86_64-linux-gnu/stubs  -L/usr/lib/gcc/x86_64-linux-gnu/12  -lcudadevrt -lcudart_static -lrt -lpthread -ldl 
