@@ -24,14 +24,14 @@ void run_normalize_test(
     size_t bytes = input.size() * sizeof(float);
     std::vector<float> actual(input.size());
 
-    CUDA_CHECK(cudaMalloc(&d_vectors, bytes));
-    CUDA_CHECK(cudaMemcpy(
+    CURAG_CUDA_CHECK(cudaMalloc(&d_vectors, bytes));
+    CURAG_CUDA_CHECK(cudaMemcpy(
         d_vectors, input.data(), bytes, cudaMemcpyHostToDevice));
 
     curag::l2_normalize(d_vectors, num_vectors, dim);
 
-    CUDA_CHECK(cudaDeviceSynchronize());
-    CUDA_CHECK(cudaMemcpy(
+    CURAG_CUDA_CHECK(cudaDeviceSynchronize());
+    CURAG_CUDA_CHECK(cudaMemcpy(
         actual.data(), d_vectors, bytes, cudaMemcpyDeviceToHost));
 
     for (size_t i = 0; i < actual.size(); ++i)
@@ -39,7 +39,7 @@ void run_normalize_test(
         expect_near(actual[i], expected[i]);
     }
 
-    CUDA_CHECK(cudaFree(d_vectors));
+    CURAG_CUDA_CHECK(cudaFree(d_vectors));
 }
 
 void test_known_vectors()
@@ -90,7 +90,7 @@ void test_invalid_inputs()
     assert(caught_null);
 
     float *d_vector = nullptr;
-    CUDA_CHECK(cudaMalloc(&d_vector, sizeof(float)));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_vector, sizeof(float)));
 
     bool caught_invalid_count = false;
     try
@@ -125,7 +125,7 @@ void test_invalid_inputs()
     }
     assert(caught_large_dim);
 
-    CUDA_CHECK(cudaFree(d_vector));
+    CURAG_CUDA_CHECK(cudaFree(d_vector));
 }
 
 int main()

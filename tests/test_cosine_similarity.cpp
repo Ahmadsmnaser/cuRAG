@@ -74,17 +74,17 @@ void run_gpu_similarity_test(
     size_t corpus_bytes = static_cast<size_t>(num_vectors) * dim * sizeof(float);
     size_t scores_bytes = num_vectors * sizeof(float);
 
-    CUDA_CHECK(cudaMalloc(&d_query, query_bytes));
-    CUDA_CHECK(cudaMalloc(&d_corpus, corpus_bytes));
-    CUDA_CHECK(cudaMalloc(&d_scores, scores_bytes));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_query, query_bytes));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_corpus, corpus_bytes));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_scores, scores_bytes));
 
-    CUDA_CHECK(cudaMemcpy(
+    CURAG_CUDA_CHECK(cudaMemcpy(
         d_query,
         query.data(),
         query_bytes,
         cudaMemcpyHostToDevice));
 
-    CUDA_CHECK(cudaMemcpy(
+    CURAG_CUDA_CHECK(cudaMemcpy(
         d_corpus,
         corpus.data(),
         corpus_bytes,
@@ -97,9 +97,9 @@ void run_gpu_similarity_test(
         num_vectors,
         dim);
 
-    CUDA_CHECK(cudaDeviceSynchronize());
+    CURAG_CUDA_CHECK(cudaDeviceSynchronize());
 
-    CUDA_CHECK(cudaMemcpy(
+    CURAG_CUDA_CHECK(cudaMemcpy(
         actual.data(),
         d_scores,
         scores_bytes,
@@ -110,9 +110,9 @@ void run_gpu_similarity_test(
         expect_near(actual[i], expected[i]);
     }
 
-    CUDA_CHECK(cudaFree(d_query));
-    CUDA_CHECK(cudaFree(d_corpus));
-    CUDA_CHECK(cudaFree(d_scores));
+    CURAG_CUDA_CHECK(cudaFree(d_query));
+    CURAG_CUDA_CHECK(cudaFree(d_corpus));
+    CURAG_CUDA_CHECK(cudaFree(d_scores));
 }
 
 void test_single_query_against_several_vectors()
@@ -251,9 +251,9 @@ void test_invalid_inputs()
     float *d_corpus = nullptr;
     float *d_scores = nullptr;
 
-    CUDA_CHECK(cudaMalloc(&d_query, sizeof(float)));
-    CUDA_CHECK(cudaMalloc(&d_corpus, sizeof(float)));
-    CUDA_CHECK(cudaMalloc(&d_scores, sizeof(float)));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_query, sizeof(float)));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_corpus, sizeof(float)));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_scores, sizeof(float)));
 
     bool caught_null_pointer = false;
     try
@@ -303,9 +303,9 @@ void test_invalid_inputs()
 
     assert(caught_too_large_dim);
 
-    CUDA_CHECK(cudaFree(d_query));
-    CUDA_CHECK(cudaFree(d_corpus));
-    CUDA_CHECK(cudaFree(d_scores));
+    CURAG_CUDA_CHECK(cudaFree(d_query));
+    CURAG_CUDA_CHECK(cudaFree(d_corpus));
+    CURAG_CUDA_CHECK(cudaFree(d_scores));
 }
 
 int main()

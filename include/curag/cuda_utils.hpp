@@ -4,11 +4,12 @@
 #include <stdexcept>
 #include <string>
 
-#define CUDA_CHECK(call) \
-    do { \
-        cudaError_t err = call; \
-        if (err != cudaSuccess) { \
+#define CURAG_CUDA_CHECK(call)                                                               \
+    do                                                                                       \
+    {                                                                                        \
+        cudaError_t err = call;                                                              \
+        if (err != cudaSuccess)                                                              \
+        {                                                                                    \
             throw std::runtime_error(std::string("CUDA error: ") + cudaGetErrorString(err)); \
-        } \
+        }                                                                                    \
     } while (0)
-    

@@ -10,7 +10,8 @@ namespace curag
     namespace
     {
 
-        __global__ void l2_normalize_kernel(float *d_vectors, int num_vectors, int dim){
+        __global__ void l2_normalize_kernel(float *d_vectors, int num_vectors, int dim)
+        {
             int vector_id = blockIdx.x;
             int tid = threadIdx.x;
 
@@ -56,7 +57,8 @@ namespace curag
 
     } // namespace
 
-    void l2_normalize(float *d_vectors, int num_vectors, int dim){
+    void l2_normalize(float *d_vectors, int num_vectors, int dim)
+    {
         if (d_vectors == nullptr)
         {
             throw std::runtime_error("d_vectors must not be null");
@@ -86,7 +88,7 @@ namespace curag
             num_vectors,
             dim);
 
-        CUDA_CHECK(cudaGetLastError());
+        CURAG_CUDA_CHECK(cudaGetLastError());
     }
 
 } // namespace curag

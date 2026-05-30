@@ -42,21 +42,21 @@ int main()
     size_t corpus_bytes = corpus.size() * sizeof(float);
     size_t scores_bytes = actual.size() * sizeof(float);
 
-    CUDA_CHECK(cudaMalloc(&d_query, query_bytes));
-    CUDA_CHECK(cudaMalloc(&d_corpus, corpus_bytes));
-    CUDA_CHECK(cudaMalloc(&d_scores, scores_bytes));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_query, query_bytes));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_corpus, corpus_bytes));
+    CURAG_CUDA_CHECK(cudaMalloc(&d_scores, scores_bytes));
 
-    CUDA_CHECK(cudaMemcpy(
+    CURAG_CUDA_CHECK(cudaMemcpy(
         d_query, query.data(), query_bytes, cudaMemcpyHostToDevice));
-    CUDA_CHECK(cudaMemcpy(
+    CURAG_CUDA_CHECK(cudaMemcpy(
         d_corpus, corpus.data(), corpus_bytes, cudaMemcpyHostToDevice));
 
     curag::l2_normalize(d_query, 1, dim);
     curag::l2_normalize(d_corpus, num_vectors, dim);
     curag::cosine_similarity(d_query, d_corpus, d_scores, num_vectors, dim);
 
-    CUDA_CHECK(cudaDeviceSynchronize());
-    CUDA_CHECK(cudaMemcpy(
+    CURAG_CUDA_CHECK(cudaDeviceSynchronize());
+    CURAG_CUDA_CHECK(cudaMemcpy(
         actual.data(), d_scores, scores_bytes, cudaMemcpyDeviceToHost));
 
     for (int i = 0; i < num_vectors; ++i)
@@ -64,9 +64,9 @@ int main()
         expect_near(actual[i], expected[i]);
     }
 
-    CUDA_CHECK(cudaFree(d_query));
-    CUDA_CHECK(cudaFree(d_corpus));
-    CUDA_CHECK(cudaFree(d_scores));
+    CURAG_CUDA_CHECK(cudaFree(d_query));
+    CURAG_CUDA_CHECK(cudaFree(d_corpus));
+    CURAG_CUDA_CHECK(cudaFree(d_scores));
 
     std::cout << "Search pipeline test passed.\n";
     return 0;
