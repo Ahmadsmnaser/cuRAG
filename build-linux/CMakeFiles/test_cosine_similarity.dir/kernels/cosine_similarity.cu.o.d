@@ -1,4 +1,4 @@
-CMakeFiles/curag_dummy.dir/kernels/dummy_kernel.cu.o : /home/ahmad/cuRAG/kernels/dummy_kernel.cu \
+CMakeFiles/test_cosine_similarity.dir/kernels/cosine_similarity.cu.o : /home/ahmad/cuRAG/kernels/cosine_similarity.cu \
     /usr/include/stdc-predef.h \
     /usr/include/cuda_runtime.h \
     /usr/include/crt/host_config.h \
@@ -179,4 +179,65 @@ CMakeFiles/curag_dummy.dir/kernels/dummy_kernel.cu.o : /home/ahmad/cuRAG/kernels
     /usr/include/device_launch_parameters.h \
     /usr/include/c++/12/utility \
     /usr/include/c++/12/bits/stl_relops.h \
-    /usr/include/c++/12/initializer_list
+    /usr/include/c++/12/initializer_list \
+    /home/ahmad/cuRAG/include/curag/cosine_similarity.hpp \
+    /home/ahmad/cuRAG/include/curag/cuda_utils.hpp \
+    /usr/include/c++/12/stdexcept \
+    /usr/include/c++/12/exception \
+    /usr/include/c++/12/bits/exception_ptr.h \
+    /usr/include/c++/12/bits/cxxabi_init_exception.h \
+    /usr/include/c++/12/typeinfo \
+    /usr/include/c++/12/bits/hash_bytes.h \
+    /usr/include/c++/12/bits/nested_exception.h \
+    /usr/include/c++/12/string \
+    /usr/include/c++/12/bits/stringfwd.h \
+    /usr/include/c++/12/bits/memoryfwd.h \
+    /usr/include/c++/12/bits/char_traits.h \
+    /usr/include/c++/12/bits/postypes.h \
+    /usr/include/c++/12/cwchar \
+    /usr/include/wchar.h \
+    /usr/include/x86_64-linux-gnu/bits/wchar.h \
+    /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+    /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+    /usr/include/c++/12/cstdint \
+    /usr/lib/gcc/x86_64-linux-gnu/12/include/stdint.h \
+    /usr/include/stdint.h \
+    /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+    /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+    /usr/include/c++/12/bits/allocator.h \
+    /usr/include/x86_64-linux-gnu/c++/12/bits/c++allocator.h \
+    /usr/include/c++/12/bits/new_allocator.h \
+    /usr/include/c++/12/bits/localefwd.h \
+    /usr/include/x86_64-linux-gnu/c++/12/bits/c++locale.h \
+    /usr/include/c++/12/clocale \
+    /usr/include/locale.h \
+    /usr/include/x86_64-linux-gnu/bits/locale.h \
+    /usr/include/c++/12/iosfwd \
+    /usr/include/c++/12/cctype \
+    /usr/include/ctype.h \
+    /usr/include/c++/12/bits/ostream_insert.h \
+    /usr/include/c++/12/bits/cxxabi_forced.h \
+    /usr/include/c++/12/bits/stl_function.h \
+    /usr/include/c++/12/backward/binders.h \
+    /usr/include/c++/12/bits/refwrap.h \
+    /usr/include/c++/12/bits/invoke.h \
+    /usr/include/c++/12/bits/range_access.h \
+    /usr/include/c++/12/bits/basic_string.h \
+    /usr/include/c++/12/ext/alloc_traits.h \
+    /usr/include/c++/12/bits/alloc_traits.h \
+    /usr/include/c++/12/bits/stl_construct.h \
+    /usr/include/c++/12/string_view \
+    /usr/include/c++/12/bits/functional_hash.h \
+    /usr/include/c++/12/bits/string_view.tcc \
+    /usr/include/c++/12/ext/string_conversions.h \
+    /usr/include/c++/12/cstdio \
+    /usr/include/c++/12/cerrno \
+    /usr/include/errno.h \
+    /usr/include/x86_64-linux-gnu/bits/errno.h \
+    /usr/include/linux/errno.h \
+    /usr/include/x86_64-linux-gnu/asm/errno.h \
+    /usr/include/asm-generic/errno.h \
+    /usr/include/asm-generic/errno-base.h \
+    /usr/include/x86_64-linux-gnu/bits/types/error_t.h \
+    /usr/include/c++/12/bits/charconv.h \
+    /usr/include/c++/12/bits/basic_string.tcc

@@ -60,20 +60,10 @@ EQUALS = =
 CMAKE_SOURCE_DIR = /home/ahmad/cuRAG
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/ahmad/cuRAG/build-linux
+CMAKE_BINARY_DIR = /home/ahmad/cuRAG/build-review
 
 #=============================================================================
 # Targets provided globally by CMake.
-
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-.PHONY : test/fast
 
 # Special rule for the target edit_cache
 edit_cache:
@@ -97,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ahmad/cuRAG/build-linux/CMakeFiles /home/ahmad/cuRAG/build-linux//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ahmad/cuRAG/build-review/CMakeFiles /home/ahmad/cuRAG/build-review//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ahmad/cuRAG/build-linux/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ahmad/cuRAG/build-review/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -127,65 +117,65 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named test_cosine_similarity
+# Target rules for targets named curag_dummy
 
 # Build rule for target.
-test_cosine_similarity: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_cosine_similarity
-.PHONY : test_cosine_similarity
+curag_dummy: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 curag_dummy
+.PHONY : curag_dummy
 
 # fast build rule for target.
-test_cosine_similarity/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/build
-.PHONY : test_cosine_similarity/fast
+curag_dummy/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_dummy.dir/build.make CMakeFiles/curag_dummy.dir/build
+.PHONY : curag_dummy/fast
 
-kernels/cosine_similarity.o: kernels/cosine_similarity.cu.o
-.PHONY : kernels/cosine_similarity.o
-
-# target to build an object file
-kernels/cosine_similarity.cu.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/kernels/cosine_similarity.cu.o
-.PHONY : kernels/cosine_similarity.cu.o
-
-kernels/cosine_similarity.i: kernels/cosine_similarity.cu.i
-.PHONY : kernels/cosine_similarity.i
-
-# target to preprocess a source file
-kernels/cosine_similarity.cu.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/kernels/cosine_similarity.cu.i
-.PHONY : kernels/cosine_similarity.cu.i
-
-kernels/cosine_similarity.s: kernels/cosine_similarity.cu.s
-.PHONY : kernels/cosine_similarity.s
-
-# target to generate assembly for a file
-kernels/cosine_similarity.cu.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/kernels/cosine_similarity.cu.s
-.PHONY : kernels/cosine_similarity.cu.s
-
-tests/test_cosine_similarity.o: tests/test_cosine_similarity.cpp.o
-.PHONY : tests/test_cosine_similarity.o
+kernels/dummy_kernel.o: kernels/dummy_kernel.cu.o
+.PHONY : kernels/dummy_kernel.o
 
 # target to build an object file
-tests/test_cosine_similarity.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/tests/test_cosine_similarity.cpp.o
-.PHONY : tests/test_cosine_similarity.cpp.o
+kernels/dummy_kernel.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_dummy.dir/build.make CMakeFiles/curag_dummy.dir/kernels/dummy_kernel.cu.o
+.PHONY : kernels/dummy_kernel.cu.o
 
-tests/test_cosine_similarity.i: tests/test_cosine_similarity.cpp.i
-.PHONY : tests/test_cosine_similarity.i
+kernels/dummy_kernel.i: kernels/dummy_kernel.cu.i
+.PHONY : kernels/dummy_kernel.i
 
 # target to preprocess a source file
-tests/test_cosine_similarity.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/tests/test_cosine_similarity.cpp.i
-.PHONY : tests/test_cosine_similarity.cpp.i
+kernels/dummy_kernel.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_dummy.dir/build.make CMakeFiles/curag_dummy.dir/kernels/dummy_kernel.cu.i
+.PHONY : kernels/dummy_kernel.cu.i
 
-tests/test_cosine_similarity.s: tests/test_cosine_similarity.cpp.s
-.PHONY : tests/test_cosine_similarity.s
+kernels/dummy_kernel.s: kernels/dummy_kernel.cu.s
+.PHONY : kernels/dummy_kernel.s
 
 # target to generate assembly for a file
-tests/test_cosine_similarity.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/tests/test_cosine_similarity.cpp.s
-.PHONY : tests/test_cosine_similarity.cpp.s
+kernels/dummy_kernel.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_dummy.dir/build.make CMakeFiles/curag_dummy.dir/kernels/dummy_kernel.cu.s
+.PHONY : kernels/dummy_kernel.cu.s
+
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_dummy.dir/build.make CMakeFiles/curag_dummy.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_dummy.dir/build.make CMakeFiles/curag_dummy.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_dummy.dir/build.make CMakeFiles/curag_dummy.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 # Help Target
 help:
@@ -195,14 +185,13 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... test"
-	@echo "... test_cosine_similarity"
-	@echo "... kernels/cosine_similarity.o"
-	@echo "... kernels/cosine_similarity.i"
-	@echo "... kernels/cosine_similarity.s"
-	@echo "... tests/test_cosine_similarity.o"
-	@echo "... tests/test_cosine_similarity.i"
-	@echo "... tests/test_cosine_similarity.s"
+	@echo "... curag_dummy"
+	@echo "... kernels/dummy_kernel.o"
+	@echo "... kernels/dummy_kernel.i"
+	@echo "... kernels/dummy_kernel.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 .PHONY : help
 
 

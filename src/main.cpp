@@ -1,17 +1,47 @@
+#include "curag/cosine_similarity.hpp"
+#include "curag/cuda_utils.hpp"
+
 #include <cuda_runtime.h>
 #include <iostream>
+#include <vector>
 
-void launch_dummy_kernel(float* d_data);
+int main()
+{
+    const int num_vectors = 3;
+    const int dim = 2;
 
-int main(){
-    float h_value = 0.0f;
-    float* d_value = nullptr;
+    std::vector<float> query = {1.0f, 0.0f};
+    std::vector<float> corpus = {
+        1.0f, 0.0f,
+        0.0f, 1.0f,
+        -1.0f, 0.0f};
+    std::vector<float> scores(num_vectors);
 
-    cudaMalloc(&d_value, sizeof(float));
-    cudaMemcpy(d_value, &h_value, sizeof(float), cudaMemcpyHostToDevice);
-    launch_dummy_kernel(d_value);
-    cudaMemcpy(&h_value, d_value, sizeof(float), cudaMemcpyDeviceToHost);   
-    std::cout << "Value after kernel execution: " << h_value << std::endl;
-    cudaFree(d_value);
-    return 0;
+    float *d_query = nullptr;
+    float *d_corpus = nullptr;
+    float *d_scores = nullptr;
+
+    CUDA_CHECK(cudaMalloc(&d_query, dim * sizeof(float)));
+    CUDA_CHECK(cudaMalloc(&d_corpus, corpus.size() * sizeof(float)));
+    CUDA_CHECK(cudaMalloc(&d_scores, num_vectors * sizeof(float)));
+
+    CUDA_CHECK(cudaMemcpy(d_query, query.data(), dim * sizeof(float),
+                          cudaMemcpyHostToDevice));
+    CUDA_CHECK(cudaMemcpy(d_corpus, corpus.data(), corpus.size() * sizeof(float),
+                          cudaMemcpyHostToDevice));
+
+    curag::cosine_similarity(d_query, d_corpus, d_scores, num_vectors, dim);
+
+    CUDA_CHECK(cudaDeviceSynchronize());
+    CUDA_CHECK(cudaMemcpy(scores.data(), d_scores, num_vectors * sizeof(float),
+                          cudaMemcpyDeviceToHost));
+
+    for (float score : scores)
+    {
+        std::cout << score << '\n';
+    }
+
+    CUDA_CHECK(cudaFree(d_query));
+    CUDA_CHECK(cudaFree(d_corpus));
+    CUDA_CHECK(cudaFree(d_scores));
 }

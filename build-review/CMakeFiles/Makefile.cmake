@@ -133,5 +133,5 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/test_cosine_similarity.dir/DependInfo.cmake"
+  "CMakeFiles/curag_dummy.dir/DependInfo.cmake"
   )

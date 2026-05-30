@@ -1,3 +1,4 @@
-/home/ahmad/cuRAG/build-linux/CMakeFiles/curag_dummy.dir
+/home/ahmad/cuRAG/build-linux/CMakeFiles/test_cosine_similarity.dir
+/home/ahmad/cuRAG/build-linux/CMakeFiles/test.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/edit_cache.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/rebuild_cache.dir
