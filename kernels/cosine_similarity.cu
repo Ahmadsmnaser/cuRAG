@@ -35,6 +35,10 @@ __global__ void cosine_similarity_kernel(const float *d_query, const float *d_co
 void cosine_similarity(const float *d_query, const float *d_corpus,
                                float *d_scores, int num_vectors, int dim)
 {
+    if(d_query == nullptr || d_corpus == nullptr || d_scores == nullptr)
+    {
+        throw std::runtime_error("Device pointers must not be null");
+    }
     if(dim <= 0)
     {
         throw std::runtime_error("Dimension must be greater than 0");

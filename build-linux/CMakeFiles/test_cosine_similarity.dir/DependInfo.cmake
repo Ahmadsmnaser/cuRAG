@@ -8,7 +8,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/ahmad/cuRAG/kernels/cosine_similarity.cu" "CMakeFiles/test_cosine_similarity.dir/kernels/cosine_similarity.cu.o" "gcc" "CMakeFiles/test_cosine_similarity.dir/kernels/cosine_similarity.cu.o.d"
   "/home/ahmad/cuRAG/tests/test_cosine_similarity.cpp" "CMakeFiles/test_cosine_similarity.dir/tests/test_cosine_similarity.cpp.o" "gcc" "CMakeFiles/test_cosine_similarity.dir/tests/test_cosine_similarity.cpp.o.d"
   )
 

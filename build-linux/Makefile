@@ -127,6 +127,32 @@ depend:
 .PHONY : depend
 
 #=============================================================================
+# Target rules for targets named curag
+
+# Build rule for target.
+curag: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 curag
+.PHONY : curag
+
+# fast build rule for target.
+curag/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/build
+.PHONY : curag/fast
+
+#=============================================================================
+# Target rules for targets named curag_demo
+
+# Build rule for target.
+curag_demo: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 curag_demo
+.PHONY : curag_demo
+
+# fast build rule for target.
+curag_demo/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_demo.dir/build.make CMakeFiles/curag_demo.dir/build
+.PHONY : curag_demo/fast
+
+#=============================================================================
 # Target rules for targets named test_cosine_similarity
 
 # Build rule for target.
@@ -139,12 +165,75 @@ test_cosine_similarity/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/build
 .PHONY : test_cosine_similarity/fast
 
+#=============================================================================
+# Target rules for targets named test_normalize
+
+# Build rule for target.
+test_normalize: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_normalize
+.PHONY : test_normalize
+
+# fast build rule for target.
+test_normalize/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_normalize.dir/build.make CMakeFiles/test_normalize.dir/build
+.PHONY : test_normalize/fast
+
+#=============================================================================
+# Target rules for targets named test_search_pipeline
+
+# Build rule for target.
+test_search_pipeline: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_search_pipeline
+.PHONY : test_search_pipeline
+
+# fast build rule for target.
+test_search_pipeline/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/build
+.PHONY : test_search_pipeline/fast
+
+#=============================================================================
+# Target rules for targets named benchmark_cosine_similarity
+
+# Build rule for target.
+benchmark_cosine_similarity: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 benchmark_cosine_similarity
+.PHONY : benchmark_cosine_similarity
+
+# fast build rule for target.
+benchmark_cosine_similarity/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_cosine_similarity.dir/build.make CMakeFiles/benchmark_cosine_similarity.dir/build
+.PHONY : benchmark_cosine_similarity/fast
+
+benchmarks/benchmark_cosine_similarity.o: benchmarks/benchmark_cosine_similarity.cpp.o
+.PHONY : benchmarks/benchmark_cosine_similarity.o
+
+# target to build an object file
+benchmarks/benchmark_cosine_similarity.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_cosine_similarity.dir/build.make CMakeFiles/benchmark_cosine_similarity.dir/benchmarks/benchmark_cosine_similarity.cpp.o
+.PHONY : benchmarks/benchmark_cosine_similarity.cpp.o
+
+benchmarks/benchmark_cosine_similarity.i: benchmarks/benchmark_cosine_similarity.cpp.i
+.PHONY : benchmarks/benchmark_cosine_similarity.i
+
+# target to preprocess a source file
+benchmarks/benchmark_cosine_similarity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_cosine_similarity.dir/build.make CMakeFiles/benchmark_cosine_similarity.dir/benchmarks/benchmark_cosine_similarity.cpp.i
+.PHONY : benchmarks/benchmark_cosine_similarity.cpp.i
+
+benchmarks/benchmark_cosine_similarity.s: benchmarks/benchmark_cosine_similarity.cpp.s
+.PHONY : benchmarks/benchmark_cosine_similarity.s
+
+# target to generate assembly for a file
+benchmarks/benchmark_cosine_similarity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_cosine_similarity.dir/build.make CMakeFiles/benchmark_cosine_similarity.dir/benchmarks/benchmark_cosine_similarity.cpp.s
+.PHONY : benchmarks/benchmark_cosine_similarity.cpp.s
+
 kernels/cosine_similarity.o: kernels/cosine_similarity.cu.o
 .PHONY : kernels/cosine_similarity.o
 
 # target to build an object file
 kernels/cosine_similarity.cu.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/kernels/cosine_similarity.cu.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/cosine_similarity.cu.o
 .PHONY : kernels/cosine_similarity.cu.o
 
 kernels/cosine_similarity.i: kernels/cosine_similarity.cu.i
@@ -152,7 +241,7 @@ kernels/cosine_similarity.i: kernels/cosine_similarity.cu.i
 
 # target to preprocess a source file
 kernels/cosine_similarity.cu.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/kernels/cosine_similarity.cu.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/cosine_similarity.cu.i
 .PHONY : kernels/cosine_similarity.cu.i
 
 kernels/cosine_similarity.s: kernels/cosine_similarity.cu.s
@@ -160,8 +249,56 @@ kernels/cosine_similarity.s: kernels/cosine_similarity.cu.s
 
 # target to generate assembly for a file
 kernels/cosine_similarity.cu.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/kernels/cosine_similarity.cu.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/cosine_similarity.cu.s
 .PHONY : kernels/cosine_similarity.cu.s
+
+kernels/normalize.o: kernels/normalize.cu.o
+.PHONY : kernels/normalize.o
+
+# target to build an object file
+kernels/normalize.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/normalize.cu.o
+.PHONY : kernels/normalize.cu.o
+
+kernels/normalize.i: kernels/normalize.cu.i
+.PHONY : kernels/normalize.i
+
+# target to preprocess a source file
+kernels/normalize.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/normalize.cu.i
+.PHONY : kernels/normalize.cu.i
+
+kernels/normalize.s: kernels/normalize.cu.s
+.PHONY : kernels/normalize.s
+
+# target to generate assembly for a file
+kernels/normalize.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/normalize.cu.s
+.PHONY : kernels/normalize.cu.s
+
+src/main.o: src/main.cpp.o
+.PHONY : src/main.o
+
+# target to build an object file
+src/main.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_demo.dir/build.make CMakeFiles/curag_demo.dir/src/main.cpp.o
+.PHONY : src/main.cpp.o
+
+src/main.i: src/main.cpp.i
+.PHONY : src/main.i
+
+# target to preprocess a source file
+src/main.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_demo.dir/build.make CMakeFiles/curag_demo.dir/src/main.cpp.i
+.PHONY : src/main.cpp.i
+
+src/main.s: src/main.cpp.s
+.PHONY : src/main.s
+
+# target to generate assembly for a file
+src/main.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_demo.dir/build.make CMakeFiles/curag_demo.dir/src/main.cpp.s
+.PHONY : src/main.cpp.s
 
 tests/test_cosine_similarity.o: tests/test_cosine_similarity.cpp.o
 .PHONY : tests/test_cosine_similarity.o
@@ -187,6 +324,54 @@ tests/test_cosine_similarity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/tests/test_cosine_similarity.cpp.s
 .PHONY : tests/test_cosine_similarity.cpp.s
 
+tests/test_normalize.o: tests/test_normalize.cpp.o
+.PHONY : tests/test_normalize.o
+
+# target to build an object file
+tests/test_normalize.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_normalize.dir/build.make CMakeFiles/test_normalize.dir/tests/test_normalize.cpp.o
+.PHONY : tests/test_normalize.cpp.o
+
+tests/test_normalize.i: tests/test_normalize.cpp.i
+.PHONY : tests/test_normalize.i
+
+# target to preprocess a source file
+tests/test_normalize.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_normalize.dir/build.make CMakeFiles/test_normalize.dir/tests/test_normalize.cpp.i
+.PHONY : tests/test_normalize.cpp.i
+
+tests/test_normalize.s: tests/test_normalize.cpp.s
+.PHONY : tests/test_normalize.s
+
+# target to generate assembly for a file
+tests/test_normalize.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_normalize.dir/build.make CMakeFiles/test_normalize.dir/tests/test_normalize.cpp.s
+.PHONY : tests/test_normalize.cpp.s
+
+tests/test_search_pipeline.o: tests/test_search_pipeline.cpp.o
+.PHONY : tests/test_search_pipeline.o
+
+# target to build an object file
+tests/test_search_pipeline.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/tests/test_search_pipeline.cpp.o
+.PHONY : tests/test_search_pipeline.cpp.o
+
+tests/test_search_pipeline.i: tests/test_search_pipeline.cpp.i
+.PHONY : tests/test_search_pipeline.i
+
+# target to preprocess a source file
+tests/test_search_pipeline.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/tests/test_search_pipeline.cpp.i
+.PHONY : tests/test_search_pipeline.cpp.i
+
+tests/test_search_pipeline.s: tests/test_search_pipeline.cpp.s
+.PHONY : tests/test_search_pipeline.s
+
+# target to generate assembly for a file
+tests/test_search_pipeline.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/tests/test_search_pipeline.cpp.s
+.PHONY : tests/test_search_pipeline.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -196,13 +381,33 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... benchmark_cosine_similarity"
+	@echo "... curag"
+	@echo "... curag_demo"
 	@echo "... test_cosine_similarity"
+	@echo "... test_normalize"
+	@echo "... test_search_pipeline"
+	@echo "... benchmarks/benchmark_cosine_similarity.o"
+	@echo "... benchmarks/benchmark_cosine_similarity.i"
+	@echo "... benchmarks/benchmark_cosine_similarity.s"
 	@echo "... kernels/cosine_similarity.o"
 	@echo "... kernels/cosine_similarity.i"
 	@echo "... kernels/cosine_similarity.s"
+	@echo "... kernels/normalize.o"
+	@echo "... kernels/normalize.i"
+	@echo "... kernels/normalize.s"
+	@echo "... src/main.o"
+	@echo "... src/main.i"
+	@echo "... src/main.s"
 	@echo "... tests/test_cosine_similarity.o"
 	@echo "... tests/test_cosine_similarity.i"
 	@echo "... tests/test_cosine_similarity.s"
+	@echo "... tests/test_normalize.o"
+	@echo "... tests/test_normalize.i"
+	@echo "... tests/test_normalize.s"
+	@echo "... tests/test_search_pipeline.o"
+	@echo "... tests/test_search_pipeline.i"
+	@echo "... tests/test_search_pipeline.s"
 .PHONY : help
 
 

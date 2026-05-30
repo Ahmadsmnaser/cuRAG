@@ -1,43 +1,92 @@
+#include "curag/normalize.hpp"
+#include "curag/cuda_utils.hpp"
+
 #include <cuda_runtime.h>
-#include <stdio.h>
+#include <stdexcept>
 
-/*
-    Normalize vectors to L2 Normalization
-    
-    Input:
-        (Vectors A)
-    Output:
-        (Normalized Vectors A')
-    where A' = A / ||A||_2
-*/
-
-__global__ void l2_normalize(float* vectors, int num_vectors, int vector_dim) {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
-    if (idx < num_vectors) {
-        float* vector = vectors + idx * vector_dim;
-        float norm = 0.0f;
-
-        // Compute the L2 norm
-        for (int i = 0; i < vector_dim; ++i) {
-            norm += vector[i] * vector[i];
-        }
-        norm = sqrtf(norm);
-
-        // Normalize the vector
-        for (int i = 0; i < vector_dim; ++i) {
-            vector[i] /= norm;
-        }
-    }
-}
-
-// i will not use this kernel, but it is here for reference
-__global__ void normalize_correct(float *A, float *B, float *A_norm, float *B_norm, float norm_A, float norm_B, int N)
+namespace curag
 {
-    int idx = blockIdx.x * blockDim.x + threadIdx.x;
 
-    if (idx < N)
+    namespace
     {
-        A_norm[idx] = A[idx] / norm_A;
-        B_norm[idx] = B[idx] / norm_B;
+
+        __global__ void l2_normalize_kernel(float *d_vectors, int num_vectors, int dim){
+            int vector_id = blockIdx.x;
+            int tid = threadIdx.x;
+
+            extern __shared__ float shared[];
+
+            float partial_sum = 0.0f;
+            int base = vector_id * dim;
+
+            // Each thread accumulates part of the squared norm.
+            for (int j = tid; j < dim; j += blockDim.x)
+            {
+                float value = d_vectors[base + j];
+                partial_sum += value * value;
+            }
+
+            shared[tid] = partial_sum;
+            __syncthreads();
+
+            // Parallel reduction inside the block.
+            for (int stride = blockDim.x / 2; stride > 0; stride >>= 1)
+            {
+                if (tid < stride)
+                {
+                    shared[tid] += shared[tid + stride];
+                }
+                __syncthreads();
+            }
+
+            float norm = sqrtf(shared[0]);
+
+            // Zero vector stays zero.
+            if (norm == 0.0f)
+            {
+                return;
+            }
+
+            // Normalize vector elements.
+            for (int j = tid; j < dim; j += blockDim.x)
+            {
+                d_vectors[base + j] /= norm;
+            }
+        }
+
+    } // namespace
+
+    void l2_normalize(float *d_vectors, int num_vectors, int dim){
+        if (d_vectors == nullptr)
+        {
+            throw std::runtime_error("d_vectors must not be null");
+        }
+
+        if (num_vectors <= 0)
+        {
+            throw std::runtime_error("num_vectors must be positive");
+        }
+
+        if (dim <= 0)
+        {
+            throw std::runtime_error("dim must be positive");
+        }
+
+        if (dim > 1024)
+        {
+            throw std::runtime_error("dim exceeds maximum supported dimension 1024");
+        }
+
+        constexpr int block_size = 256;
+        int num_blocks = num_vectors;
+        int shared_bytes = block_size * sizeof(float);
+
+        l2_normalize_kernel<<<num_blocks, block_size, shared_bytes>>>(
+            d_vectors,
+            num_vectors,
+            dim);
+
+        CUDA_CHECK(cudaGetLastError());
     }
-}
+
+} // namespace curag
