@@ -189,6 +189,23 @@ void test_large_random_topk()
 
     run_topk_test(scores, k);
 }
+void test_large_random_topk_k100()
+{
+    constexpr int num_scores = 10000;
+    constexpr int k = 100;
+
+    std::vector<float> scores(num_scores);
+
+    std::mt19937 rng(123);
+    std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
+
+    for (float &score : scores)
+    {
+        score = dist(rng);
+    }
+
+    run_topk_test(scores, k);
+}
 int main()
 {
     test_basic_topk();
@@ -196,6 +213,7 @@ int main()
     test_k_equals_num_scores();
     test_invalid_inputs();
     test_large_random_topk();
+    test_large_random_topk_k100();
 
     std::cout << "All top-K tests passed.\n";
     return 0;

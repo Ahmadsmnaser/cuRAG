@@ -42,6 +42,20 @@ searches.
 - The current API accepts device pointers. Host-to-device transfer is kept
   outside the kernels so transfer and compute costs can be measured separately.
 
+## Benchmark Environment
+
+The current numbers are local development baselines. They are useful for
+tracking implementation changes, but they are not final comparisons against
+FAISS, PyTorch, or other production libraries.
+
+| Component | Value |
+| --- | --- |
+| GPU | NVIDIA GeForce MX250 |
+| CUDA version | TODO |
+| OS | TODO |
+| Compiler | TODO |
+| Build type | TODO |
+
 ### Baseline Benchmark
 
 `benchmark_cosine_similarity` measures only cosine-similarity kernel execution
@@ -94,11 +108,45 @@ merges those candidates into the final top-K result.
 Top-K returns both values and indices. The indices are required by the RAG
 layer to map retrieved vectors back to documents.
 
+### Why Top-K Instead Of Full Sort?
+
+Sorting all `N` similarity scores is wasteful when retrieval only needs the
+best `K`. In a RAG workload, `K` is usually much smaller than `N`: for example,
+the system may retrieve `K = 10` vectors from a corpus of `100,000`.
+
+The current design therefore generates local candidates in each block and
+merges those candidates globally instead of sorting the complete score array.
+
+### Why Not CPU Top-K?
+
+Performing Top-K selection on the CPU would require copying all `N` similarity
+scores from GPU memory to CPU memory. Keeping selection on the GPU allows the
+retrieval path to copy back only `K` values and `K` vector indices.
+
+This matches the goal of building a GPU retrieval backend and avoids making a
+full score-array transfer part of every query.
+
+### Why Not Thrust or CUB?
+
+Thrust and CUB provide optimized primitives that could sort or select results
+more efficiently. cuRAG intentionally avoids those primitives in Phase 2
+because the goal is to understand and implement the internals manually.
+
+The learning target is local selection, shared-memory sorting, candidate
+generation, and merge behavior. Production systems may use optimized
+primitives, but this project prioritizes learning and analysis.
+
+### Deterministic Tie-Breaking
+
+When two scores are equal, the smaller vector index is ranked first. This keeps
+tests deterministic and avoids unstable output ordering when similarity scores
+tie.
+
 ### Current Limits
 
 The block-local shared-memory usage is now fixed: `256` values and `256`
-indices per block. This removes the previous `K <= 24` shared-memory limit on
-the local NVIDIA GeForce MX250.
+indices per block. This removes the previous shared-memory bottleneck that
+prevented larger `K` values such as `K = 100` on the local GPU.
 
 The final merge stage currently runs on a single CUDA thread and maintains a
 sorted insertion buffer of up to `K = 1024` results. This is correct but
