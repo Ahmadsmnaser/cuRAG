@@ -6,6 +6,7 @@
 #include <cmath>
 #include <iostream>
 #include <stdexcept>
+#include <random>
 #include <vector>
 
 void expect_near(float actual, float expected, float tolerance = 1e-5f)
@@ -171,7 +172,23 @@ void test_invalid_inputs()
     CURAG_CUDA_CHECK(cudaFree(d_values));
     CURAG_CUDA_CHECK(cudaFree(d_indices));
 }
+void test_large_random_topk()
+{
+    constexpr int num_scores = 10000;
+    constexpr int k = 10;
 
+    std::vector<float> scores(num_scores);
+
+    std::mt19937 rng(42);
+    std::uniform_real_distribution<float> dist(-1.0f, 1.0f);
+
+    for (float &score : scores)
+    {
+        score = dist(rng);
+    }
+
+    run_topk_test(scores, k);
+}
 int main()
 {
     test_basic_topk();
