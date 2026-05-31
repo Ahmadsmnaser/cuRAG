@@ -3,6 +3,7 @@
 /home/ahmad/cuRAG/build-linux/CMakeFiles/test_cosine_similarity.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/test_normalize.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/test_search_pipeline.dir
+/home/ahmad/cuRAG/build-linux/CMakeFiles/test_topk.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/benchmark_cosine_similarity.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/test.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/edit_cache.dir

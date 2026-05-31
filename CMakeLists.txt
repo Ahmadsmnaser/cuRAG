@@ -13,6 +13,7 @@ enable_testing()
 add_library(curag STATIC
     kernels/cosine_similarity.cu
     kernels/normalize.cu
+    kernels/topk_bitonic.cu
 )
 
 target_include_directories(curag PUBLIC include)
@@ -58,6 +59,17 @@ target_link_libraries(test_search_pipeline PRIVATE curag)
 add_test(
     NAME search_pipeline
     COMMAND test_search_pipeline
+)
+
+add_executable(test_topk
+    tests/test_topk.cpp
+)
+
+target_link_libraries(test_topk PRIVATE curag)
+
+add_test(
+    NAME topk
+    COMMAND test_topk
 )
 
 add_executable(benchmark_cosine_similarity

@@ -192,6 +192,19 @@ test_search_pipeline/fast:
 .PHONY : test_search_pipeline/fast
 
 #=============================================================================
+# Target rules for targets named test_topk
+
+# Build rule for target.
+test_topk: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_topk
+.PHONY : test_topk
+
+# fast build rule for target.
+test_topk/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_topk.dir/build.make CMakeFiles/test_topk.dir/build
+.PHONY : test_topk/fast
+
+#=============================================================================
 # Target rules for targets named benchmark_cosine_similarity
 
 # Build rule for target.
@@ -275,6 +288,30 @@ kernels/normalize.s: kernels/normalize.cu.s
 kernels/normalize.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/normalize.cu.s
 .PHONY : kernels/normalize.cu.s
+
+kernels/topk_bitonic.o: kernels/topk_bitonic.cu.o
+.PHONY : kernels/topk_bitonic.o
+
+# target to build an object file
+kernels/topk_bitonic.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/topk_bitonic.cu.o
+.PHONY : kernels/topk_bitonic.cu.o
+
+kernels/topk_bitonic.i: kernels/topk_bitonic.cu.i
+.PHONY : kernels/topk_bitonic.i
+
+# target to preprocess a source file
+kernels/topk_bitonic.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/topk_bitonic.cu.i
+.PHONY : kernels/topk_bitonic.cu.i
+
+kernels/topk_bitonic.s: kernels/topk_bitonic.cu.s
+.PHONY : kernels/topk_bitonic.s
+
+# target to generate assembly for a file
+kernels/topk_bitonic.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/topk_bitonic.cu.s
+.PHONY : kernels/topk_bitonic.cu.s
 
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
@@ -372,6 +409,30 @@ tests/test_search_pipeline.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/tests/test_search_pipeline.cpp.s
 .PHONY : tests/test_search_pipeline.cpp.s
 
+tests/test_topk.o: tests/test_topk.cpp.o
+.PHONY : tests/test_topk.o
+
+# target to build an object file
+tests/test_topk.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_topk.dir/build.make CMakeFiles/test_topk.dir/tests/test_topk.cpp.o
+.PHONY : tests/test_topk.cpp.o
+
+tests/test_topk.i: tests/test_topk.cpp.i
+.PHONY : tests/test_topk.i
+
+# target to preprocess a source file
+tests/test_topk.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_topk.dir/build.make CMakeFiles/test_topk.dir/tests/test_topk.cpp.i
+.PHONY : tests/test_topk.cpp.i
+
+tests/test_topk.s: tests/test_topk.cpp.s
+.PHONY : tests/test_topk.s
+
+# target to generate assembly for a file
+tests/test_topk.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_topk.dir/build.make CMakeFiles/test_topk.dir/tests/test_topk.cpp.s
+.PHONY : tests/test_topk.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -387,6 +448,7 @@ help:
 	@echo "... test_cosine_similarity"
 	@echo "... test_normalize"
 	@echo "... test_search_pipeline"
+	@echo "... test_topk"
 	@echo "... benchmarks/benchmark_cosine_similarity.o"
 	@echo "... benchmarks/benchmark_cosine_similarity.i"
 	@echo "... benchmarks/benchmark_cosine_similarity.s"
@@ -396,6 +458,9 @@ help:
 	@echo "... kernels/normalize.o"
 	@echo "... kernels/normalize.i"
 	@echo "... kernels/normalize.s"
+	@echo "... kernels/topk_bitonic.o"
+	@echo "... kernels/topk_bitonic.i"
+	@echo "... kernels/topk_bitonic.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -408,6 +473,9 @@ help:
 	@echo "... tests/test_search_pipeline.o"
 	@echo "... tests/test_search_pipeline.i"
 	@echo "... tests/test_search_pipeline.s"
+	@echo "... tests/test_topk.o"
+	@echo "... tests/test_topk.i"
+	@echo "... tests/test_topk.s"
 .PHONY : help
 
 
