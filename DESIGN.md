@@ -77,3 +77,13 @@ The PyTorch comparison script uses `torch.mv`, the same `10K` and `100K`
 corpus sizes, dimension `768`, warmup launches, and CUDA-event timing. PyTorch
 is not currently installed in the local development environment, so comparison
 numbers have not been recorded yet.
+
+## Phase 2 — Top-K Selection
+
+Phase 2 adds GPU top-K selection after cosine similarity.
+
+The initial implementation uses a correctness-first baseline: it scans all scores and maintains a sorted top-K buffer. This is intentionally slow, but it establishes the API, output format, and tests before introducing a parallel implementation.
+
+The optimized design will use block-wise top-K selection. Each CUDA block computes a local top-K candidate list, then a second merge stage produces the final global top-K.
+
+Top-K returns both values and indices. The indices are required by the RAG layer to map retrieved vectors back to documents.
