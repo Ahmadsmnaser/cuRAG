@@ -217,6 +217,19 @@ benchmark_cosine_similarity/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_cosine_similarity.dir/build.make CMakeFiles/benchmark_cosine_similarity.dir/build
 .PHONY : benchmark_cosine_similarity/fast
 
+#=============================================================================
+# Target rules for targets named benchmark_topk
+
+# Build rule for target.
+benchmark_topk: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 benchmark_topk
+.PHONY : benchmark_topk
+
+# fast build rule for target.
+benchmark_topk/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_topk.dir/build.make CMakeFiles/benchmark_topk.dir/build
+.PHONY : benchmark_topk/fast
+
 benchmarks/benchmark_cosine_similarity.o: benchmarks/benchmark_cosine_similarity.cpp.o
 .PHONY : benchmarks/benchmark_cosine_similarity.o
 
@@ -240,6 +253,30 @@ benchmarks/benchmark_cosine_similarity.s: benchmarks/benchmark_cosine_similarity
 benchmarks/benchmark_cosine_similarity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_cosine_similarity.dir/build.make CMakeFiles/benchmark_cosine_similarity.dir/benchmarks/benchmark_cosine_similarity.cpp.s
 .PHONY : benchmarks/benchmark_cosine_similarity.cpp.s
+
+benchmarks/benchmark_topk.o: benchmarks/benchmark_topk.cpp.o
+.PHONY : benchmarks/benchmark_topk.o
+
+# target to build an object file
+benchmarks/benchmark_topk.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_topk.dir/build.make CMakeFiles/benchmark_topk.dir/benchmarks/benchmark_topk.cpp.o
+.PHONY : benchmarks/benchmark_topk.cpp.o
+
+benchmarks/benchmark_topk.i: benchmarks/benchmark_topk.cpp.i
+.PHONY : benchmarks/benchmark_topk.i
+
+# target to preprocess a source file
+benchmarks/benchmark_topk.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_topk.dir/build.make CMakeFiles/benchmark_topk.dir/benchmarks/benchmark_topk.cpp.i
+.PHONY : benchmarks/benchmark_topk.cpp.i
+
+benchmarks/benchmark_topk.s: benchmarks/benchmark_topk.cpp.s
+.PHONY : benchmarks/benchmark_topk.s
+
+# target to generate assembly for a file
+benchmarks/benchmark_topk.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_topk.dir/build.make CMakeFiles/benchmark_topk.dir/benchmarks/benchmark_topk.cpp.s
+.PHONY : benchmarks/benchmark_topk.cpp.s
 
 kernels/cosine_similarity.o: kernels/cosine_similarity.cu.o
 .PHONY : kernels/cosine_similarity.o
@@ -443,6 +480,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... benchmark_cosine_similarity"
+	@echo "... benchmark_topk"
 	@echo "... curag"
 	@echo "... curag_demo"
 	@echo "... test_cosine_similarity"
@@ -452,6 +490,9 @@ help:
 	@echo "... benchmarks/benchmark_cosine_similarity.o"
 	@echo "... benchmarks/benchmark_cosine_similarity.i"
 	@echo "... benchmarks/benchmark_cosine_similarity.s"
+	@echo "... benchmarks/benchmark_topk.o"
+	@echo "... benchmarks/benchmark_topk.i"
+	@echo "... benchmarks/benchmark_topk.s"
 	@echo "... kernels/cosine_similarity.o"
 	@echo "... kernels/cosine_similarity.i"
 	@echo "... kernels/cosine_similarity.s"

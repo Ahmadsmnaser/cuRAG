@@ -192,6 +192,17 @@ namespace{
             BLOCK_SIZE * k * sizeof(float) +
             BLOCK_SIZE * k * sizeof(int);
 
+        int device = 0;
+        CURAG_CUDA_CHECK(cudaGetDevice(&device));
+        cudaDeviceProp props{};
+        CURAG_CUDA_CHECK(cudaGetDeviceProperties(&props, device));
+
+        if (shared_bytes > static_cast<size_t>(props.sharedMemPerBlock))
+        {
+            throw std::runtime_error(
+                "Requested K requires too much shared memory for current top-k implementation");
+        }
+
         local_topk_kernel<<<num_blocks, BLOCK_SIZE, shared_bytes>>>(
             d_scores,
             d_partial_values,

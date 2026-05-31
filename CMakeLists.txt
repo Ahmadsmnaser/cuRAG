@@ -77,3 +77,9 @@ add_executable(benchmark_cosine_similarity
 )
 
 target_link_libraries(benchmark_cosine_similarity PRIVATE curag)
+
+add_executable(benchmark_topk
+    benchmarks/benchmark_topk.cpp
+)
+
+target_link_libraries(benchmark_topk PRIVATE curag)

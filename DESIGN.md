@@ -78,12 +78,51 @@ corpus sizes, dimension `768`, warmup launches, and CUDA-event timing. PyTorch
 is not currently installed in the local development environment, so comparison
 numbers have not been recorded yet.
 
-## Phase 2 — Top-K Selection
+## Phase 2 - Top-K Selection
 
 Phase 2 adds GPU top-K selection after cosine similarity.
 
-The initial implementation uses a correctness-first baseline: it scans all scores and maintains a sorted top-K buffer. This is intentionally slow, but it establishes the API, output format, and tests before introducing a parallel implementation.
+The first implementation used a correctness-first baseline: one thread scanned
+all scores and maintained a sorted top-K buffer. This established the API,
+output format, and tests before introducing parallel work.
 
-The optimized design will use block-wise top-K selection. Each CUDA block computes a local top-K candidate list, then a second merge stage produces the final global top-K.
+The current implementation uses block-wise top-K selection. Each thread scans a
+grid-stride subset of scores and maintains a local sorted top-K list. Thread
+zero merges those lists into one block-local result. A second kernel merges the
+block-local candidates into the final top-K result.
 
-Top-K returns both values and indices. The indices are required by the RAG layer to map retrieved vectors back to documents.
+Top-K returns both values and indices. The indices are required by the RAG
+layer to map retrieved vectors back to documents.
+
+### Current Limits
+
+The block-local kernel allocates `256 * K` values and indices in shared memory.
+On the local NVIDIA GeForce MX250, which has `49,152` bytes of shared memory per
+block, the current layout supports up to `K = 24`. Larger values require a
+different shared-memory strategy.
+
+The final merge stage currently runs on a single CUDA thread. This is correct
+but intentionally not the final optimized implementation.
+
+### Top-K Baseline Benchmark
+
+`benchmark_topk` measures calls to `topk()` using CUDA events. It performs five
+warmup runs and averages twenty measured runs. Input allocation and
+host-to-device transfer occur before timing. The current `topk()` API allocates
+and frees temporary partial-result buffers internally, so that overhead is
+included in these measurements.
+
+Run it with:
+
+```bash
+cmake -S . -B build-linux
+cmake --build build-linux --target benchmark_topk
+./build-linux/benchmark_topk
+```
+
+Initial local baseline for `K = 10`:
+
+| Input scores | K | Top-K time |
+| ---: | ---: | ---: |
+| 10,000 | 10 | 1.40022 ms |
+| 100,000 | 10 | 9.70957 ms |
