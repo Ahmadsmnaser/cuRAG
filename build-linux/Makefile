@@ -282,6 +282,19 @@ test_device_buffer/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_device_buffer.dir/build.make CMakeFiles/test_device_buffer.dir/build
 .PHONY : test_device_buffer/fast
 
+#=============================================================================
+# Target rules for targets named benchmark_index_search
+
+# Build rule for target.
+benchmark_index_search: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 benchmark_index_search
+.PHONY : benchmark_index_search
+
+# fast build rule for target.
+benchmark_index_search/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_index_search.dir/build.make CMakeFiles/benchmark_index_search.dir/build
+.PHONY : benchmark_index_search/fast
+
 benchmarks/benchmark_cosine_similarity.o: benchmarks/benchmark_cosine_similarity.cpp.o
 .PHONY : benchmarks/benchmark_cosine_similarity.o
 
@@ -305,6 +318,30 @@ benchmarks/benchmark_cosine_similarity.s: benchmarks/benchmark_cosine_similarity
 benchmarks/benchmark_cosine_similarity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_cosine_similarity.dir/build.make CMakeFiles/benchmark_cosine_similarity.dir/benchmarks/benchmark_cosine_similarity.cpp.s
 .PHONY : benchmarks/benchmark_cosine_similarity.cpp.s
+
+benchmarks/benchmark_index_search.o: benchmarks/benchmark_index_search.cpp.o
+.PHONY : benchmarks/benchmark_index_search.o
+
+# target to build an object file
+benchmarks/benchmark_index_search.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_index_search.dir/build.make CMakeFiles/benchmark_index_search.dir/benchmarks/benchmark_index_search.cpp.o
+.PHONY : benchmarks/benchmark_index_search.cpp.o
+
+benchmarks/benchmark_index_search.i: benchmarks/benchmark_index_search.cpp.i
+.PHONY : benchmarks/benchmark_index_search.i
+
+# target to preprocess a source file
+benchmarks/benchmark_index_search.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_index_search.dir/build.make CMakeFiles/benchmark_index_search.dir/benchmarks/benchmark_index_search.cpp.i
+.PHONY : benchmarks/benchmark_index_search.cpp.i
+
+benchmarks/benchmark_index_search.s: benchmarks/benchmark_index_search.cpp.s
+.PHONY : benchmarks/benchmark_index_search.s
+
+# target to generate assembly for a file
+benchmarks/benchmark_index_search.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_index_search.dir/build.make CMakeFiles/benchmark_index_search.dir/benchmarks/benchmark_index_search.cpp.s
+.PHONY : benchmarks/benchmark_index_search.cpp.s
 
 benchmarks/benchmark_search_pipeline.o: benchmarks/benchmark_search_pipeline.cpp.o
 .PHONY : benchmarks/benchmark_search_pipeline.o
@@ -652,6 +689,7 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... test"
 	@echo "... benchmark_cosine_similarity"
+	@echo "... benchmark_index_search"
 	@echo "... benchmark_search_pipeline"
 	@echo "... benchmark_topk"
 	@echo "... curag"
@@ -666,6 +704,9 @@ help:
 	@echo "... benchmarks/benchmark_cosine_similarity.o"
 	@echo "... benchmarks/benchmark_cosine_similarity.i"
 	@echo "... benchmarks/benchmark_cosine_similarity.s"
+	@echo "... benchmarks/benchmark_index_search.o"
+	@echo "... benchmarks/benchmark_index_search.i"
+	@echo "... benchmarks/benchmark_index_search.s"
 	@echo "... benchmarks/benchmark_search_pipeline.o"
 	@echo "... benchmarks/benchmark_search_pipeline.i"
 	@echo "... benchmarks/benchmark_search_pipeline.s"

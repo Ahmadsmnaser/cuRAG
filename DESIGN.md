@@ -222,3 +222,54 @@ At `100,000` vectors, cosine similarity dominates search latency. Top-K
 accounts for approximately `7%` of the measured total latency for `K = 10`.
 The serial merge remains a meaningful optimization target for larger values of
 `K`.
+
+## Phase 3 - Index Ownership And Memory Reuse
+
+Phase 3 introduces a synchronous C++ `Index` abstraction. The index owns the
+normalized GPU corpus and reuses GPU buffers for the query, similarity scores,
+and final Top-K outputs across searches.
+
+Corpus upload and normalization happen once during `Index::build()`. A call to
+`Index::search()` performs:
+
+```text
+query host-to-device copy
+-> query normalization
+-> cosine similarity
+-> Top-K selection
+-> K values and K indices copied back to the host
+```
+
+The current implementation is deliberately synchronous. CUDA streams,
+multi-query batching, persistence, and further temporary-buffer reuse remain
+Phase 3 work.
+
+### Synchronous Index Search Baseline
+
+`benchmark_index_search` measures the public `Index::search()` API using host
+wall-clock timing. It builds and normalizes the corpus before timing, performs
+five warmup queries, and averages `100` measured queries.
+
+Unlike the kernel-only benchmarks, these measurements include query transfer,
+kernel execution, synchronization, final Top-K result transfer, and host result
+construction. Top-K still allocates and frees its partial-result buffers
+internally on every search.
+
+Run it with:
+
+```bash
+cmake -S . -B build-linux
+cmake --build build-linux --target benchmark_index_search
+./build-linux/benchmark_index_search
+```
+
+Initial synchronous `Index::search()` baseline for dimension `768` and
+`K = 10`:
+
+| Corpus vectors | Queries | Average latency | Throughput |
+| ---: | ---: | ---: | ---: |
+| 10,000 | 100 | 3.383 ms/query | 295.611 queries/sec |
+| 100,000 | 100 | 28.491 ms/query | 35.099 queries/sec |
+
+These are local development baselines for tracking Phase 3 changes. They are
+not final throughput claims or comparisons against production libraries.

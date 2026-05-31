@@ -56,4 +56,5 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/benchmark_search_pipeline.dir/DependInfo.cmake"
   "CMakeFiles/test_index.dir/DependInfo.cmake"
   "CMakeFiles/test_device_buffer.dir/DependInfo.cmake"
+  "CMakeFiles/benchmark_index_search.dir/DependInfo.cmake"
   )

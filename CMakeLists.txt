@@ -122,3 +122,9 @@ add_test(
     NAME device_buffer
     COMMAND test_device_buffer
 )
+
+add_executable(benchmark_index_search
+    benchmarks/benchmark_index_search.cpp
+)
+
+target_link_libraries(benchmark_index_search PRIVATE curag)
