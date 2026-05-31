@@ -83,3 +83,14 @@ add_executable(benchmark_topk
 )
 
 target_link_libraries(benchmark_topk PRIVATE curag)
+
+add_executable(test_search_topk_pipeline
+    tests/test_search_topk_pipeline.cpp
+)
+
+target_link_libraries(test_search_topk_pipeline PRIVATE curag)
+
+add_test(
+    NAME search_topk_pipeline
+    COMMAND test_search_topk_pipeline
+)

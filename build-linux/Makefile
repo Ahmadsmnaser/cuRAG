@@ -230,6 +230,19 @@ benchmark_topk/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_topk.dir/build.make CMakeFiles/benchmark_topk.dir/build
 .PHONY : benchmark_topk/fast
 
+#=============================================================================
+# Target rules for targets named test_search_topk_pipeline
+
+# Build rule for target.
+test_search_topk_pipeline: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_search_topk_pipeline
+.PHONY : test_search_topk_pipeline
+
+# fast build rule for target.
+test_search_topk_pipeline/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_topk_pipeline.dir/build.make CMakeFiles/test_search_topk_pipeline.dir/build
+.PHONY : test_search_topk_pipeline/fast
+
 benchmarks/benchmark_cosine_similarity.o: benchmarks/benchmark_cosine_similarity.cpp.o
 .PHONY : benchmarks/benchmark_cosine_similarity.o
 
@@ -446,6 +459,30 @@ tests/test_search_pipeline.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/tests/test_search_pipeline.cpp.s
 .PHONY : tests/test_search_pipeline.cpp.s
 
+tests/test_search_topk_pipeline.o: tests/test_search_topk_pipeline.cpp.o
+.PHONY : tests/test_search_topk_pipeline.o
+
+# target to build an object file
+tests/test_search_topk_pipeline.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_topk_pipeline.dir/build.make CMakeFiles/test_search_topk_pipeline.dir/tests/test_search_topk_pipeline.cpp.o
+.PHONY : tests/test_search_topk_pipeline.cpp.o
+
+tests/test_search_topk_pipeline.i: tests/test_search_topk_pipeline.cpp.i
+.PHONY : tests/test_search_topk_pipeline.i
+
+# target to preprocess a source file
+tests/test_search_topk_pipeline.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_topk_pipeline.dir/build.make CMakeFiles/test_search_topk_pipeline.dir/tests/test_search_topk_pipeline.cpp.i
+.PHONY : tests/test_search_topk_pipeline.cpp.i
+
+tests/test_search_topk_pipeline.s: tests/test_search_topk_pipeline.cpp.s
+.PHONY : tests/test_search_topk_pipeline.s
+
+# target to generate assembly for a file
+tests/test_search_topk_pipeline.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_topk_pipeline.dir/build.make CMakeFiles/test_search_topk_pipeline.dir/tests/test_search_topk_pipeline.cpp.s
+.PHONY : tests/test_search_topk_pipeline.cpp.s
+
 tests/test_topk.o: tests/test_topk.cpp.o
 .PHONY : tests/test_topk.o
 
@@ -486,6 +523,7 @@ help:
 	@echo "... test_cosine_similarity"
 	@echo "... test_normalize"
 	@echo "... test_search_pipeline"
+	@echo "... test_search_topk_pipeline"
 	@echo "... test_topk"
 	@echo "... benchmarks/benchmark_cosine_similarity.o"
 	@echo "... benchmarks/benchmark_cosine_similarity.i"
@@ -514,6 +552,9 @@ help:
 	@echo "... tests/test_search_pipeline.o"
 	@echo "... tests/test_search_pipeline.i"
 	@echo "... tests/test_search_pipeline.s"
+	@echo "... tests/test_search_topk_pipeline.o"
+	@echo "... tests/test_search_topk_pipeline.i"
+	@echo "... tests/test_search_topk_pipeline.s"
 	@echo "... tests/test_topk.o"
 	@echo "... tests/test_topk.i"
 	@echo "... tests/test_topk.s"
