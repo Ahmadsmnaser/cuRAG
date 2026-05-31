@@ -112,3 +112,13 @@ add_test(
     NAME index
     COMMAND test_index
 )
+add_executable(test_device_buffer
+    tests/test_device_buffer.cpp
+)
+
+target_link_libraries(test_device_buffer PRIVATE curag)
+
+add_test(
+    NAME device_buffer
+    COMMAND test_device_buffer
+)

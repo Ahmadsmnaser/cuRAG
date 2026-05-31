@@ -1,5 +1,5 @@
 #pragma once
-
+#include "curag/device_buffer.hpp"
 #include <vector>
 #include <cstddef>
 
@@ -16,13 +16,13 @@ namespace curag
     {
     public:
         explicit Index(int dim); // Constructor that initializes the index with the specified dimensionality
-        ~Index(); // Destructor to clean up any allocated resources
+        ~Index() = default; // DeviceBuffer members release their allocations.
 
         Index(const Index &) = delete; // Delete copy constructor to prevent copying of the index
         Index &operator=(const Index &) = delete; // Delete copy assignment operator to prevent copying of the index
 
-        Index(Index &&other) noexcept; // Move constructor to allow moving of the index without copying
-        Index &operator=(Index &&other) noexcept; // Move assignment operator to allow moving of the index without copying
+        Index(Index &&other) noexcept = default;
+        Index &operator=(Index &&other) noexcept = default;
 
         void build(const float *corpus, int num_vectors); // Method to build the index from a given corpus of vectors, where 'corpus' is a pointer to the vector data and 'num_vectors' is the number of vectors in the corpus
 
@@ -35,7 +35,13 @@ namespace curag
     private:
         int dim_;
         int num_vectors_;
-        float *d_corpus_;
+
+        DeviceBuffer<float> corpus_buffer_;
+
+        mutable DeviceBuffer<float> query_buffer_;
+        mutable DeviceBuffer<float> scores_buffer_;
+        mutable DeviceBuffer<float> topk_values_buffer_;
+        mutable DeviceBuffer<int> topk_indices_buffer_;
     };
 
 } // namespace curag

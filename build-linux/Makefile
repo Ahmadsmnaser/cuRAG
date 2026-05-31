@@ -269,6 +269,19 @@ test_index/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index.dir/build.make CMakeFiles/test_index.dir/build
 .PHONY : test_index/fast
 
+#=============================================================================
+# Target rules for targets named test_device_buffer
+
+# Build rule for target.
+test_device_buffer: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_device_buffer
+.PHONY : test_device_buffer
+
+# fast build rule for target.
+test_device_buffer/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_device_buffer.dir/build.make CMakeFiles/test_device_buffer.dir/build
+.PHONY : test_device_buffer/fast
+
 benchmarks/benchmark_cosine_similarity.o: benchmarks/benchmark_cosine_similarity.cpp.o
 .PHONY : benchmarks/benchmark_cosine_similarity.o
 
@@ -485,6 +498,30 @@ tests/test_cosine_similarity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/tests/test_cosine_similarity.cpp.s
 .PHONY : tests/test_cosine_similarity.cpp.s
 
+tests/test_device_buffer.o: tests/test_device_buffer.cpp.o
+.PHONY : tests/test_device_buffer.o
+
+# target to build an object file
+tests/test_device_buffer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_device_buffer.dir/build.make CMakeFiles/test_device_buffer.dir/tests/test_device_buffer.cpp.o
+.PHONY : tests/test_device_buffer.cpp.o
+
+tests/test_device_buffer.i: tests/test_device_buffer.cpp.i
+.PHONY : tests/test_device_buffer.i
+
+# target to preprocess a source file
+tests/test_device_buffer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_device_buffer.dir/build.make CMakeFiles/test_device_buffer.dir/tests/test_device_buffer.cpp.i
+.PHONY : tests/test_device_buffer.cpp.i
+
+tests/test_device_buffer.s: tests/test_device_buffer.cpp.s
+.PHONY : tests/test_device_buffer.s
+
+# target to generate assembly for a file
+tests/test_device_buffer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_device_buffer.dir/build.make CMakeFiles/test_device_buffer.dir/tests/test_device_buffer.cpp.s
+.PHONY : tests/test_device_buffer.cpp.s
+
 tests/test_index.o: tests/test_index.cpp.o
 .PHONY : tests/test_index.o
 
@@ -620,6 +657,7 @@ help:
 	@echo "... curag"
 	@echo "... curag_demo"
 	@echo "... test_cosine_similarity"
+	@echo "... test_device_buffer"
 	@echo "... test_index"
 	@echo "... test_normalize"
 	@echo "... test_search_pipeline"
@@ -652,6 +690,9 @@ help:
 	@echo "... tests/test_cosine_similarity.o"
 	@echo "... tests/test_cosine_similarity.i"
 	@echo "... tests/test_cosine_similarity.s"
+	@echo "... tests/test_device_buffer.o"
+	@echo "... tests/test_device_buffer.i"
+	@echo "... tests/test_device_buffer.s"
 	@echo "... tests/test_index.o"
 	@echo "... tests/test_index.i"
 	@echo "... tests/test_index.s"

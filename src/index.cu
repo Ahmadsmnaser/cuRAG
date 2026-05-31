@@ -1,5 +1,4 @@
 #include "curag/index.hpp"
-
 #include "curag/cosine_similarity.hpp"
 #include "curag/normalize.hpp"
 #include "curag/topk.hpp"
@@ -8,57 +7,23 @@
 #include <cuda_runtime.h>
 
 #include <stdexcept>
-#include <utility>
 
 namespace curag
 {
 
     Index::Index(int dim)
-        : dim_(dim), num_vectors_(0), d_corpus_(nullptr)
+        : dim_(dim),
+          num_vectors_(0)
     {
-        if (dim <= 0)
+        if (dim_ <= 0)
         {
-            throw std::invalid_argument("Dimension must be positive");
+            throw std::invalid_argument("Index dim must be positive");
         }
-        if (dim > 1024)
-        {
-            throw std::invalid_argument("Dimension exceeds maximum supported value (1024)");
-        }
-    }
-    Index::~Index()
-    {
-        if (d_corpus_)
-        {
-            cudaFree(d_corpus_);
-            d_corpus_ = nullptr;
-        }
-    }
 
-    Index::Index(Index &&other) noexcept
-        : dim_(other.dim_), num_vectors_(other.num_vectors_), d_corpus_(other.d_corpus_)
-    {
-        other.dim_ = 0;
-        other.num_vectors_ = 0;
-        other.d_corpus_ = nullptr;
-    }
-
-    Index &Index::operator=(Index &&other) noexcept
-    {
-        if (this != &other)
+        if (dim_ > 1024)
         {
-            if (d_corpus_)
-            {
-                cudaFree(d_corpus_);
-            }
-            dim_ = other.dim_;
-            num_vectors_ = other.num_vectors_;
-            d_corpus_ = other.d_corpus_;
-
-            other.dim_ = 0;
-            other.num_vectors_ = 0;
-            other.d_corpus_ = nullptr;
+            throw std::invalid_argument("Index dim exceeds maximum supported dimension 1024");
         }
-        return *this;
     }
 
     void Index::build(const float *corpus, int num_vectors)
@@ -72,19 +37,22 @@ namespace curag
         {
             throw std::runtime_error("num_vectors must be positive");
         }
-        if (d_corpus_ != nullptr)
-        {
-            CURAG_CUDA_CHECK(cudaFree(d_corpus_));
-            d_corpus_ = nullptr;
-        }
+
         num_vectors_ = num_vectors;
-        size_t corpus_bytes = static_cast<size_t>(dim_) * num_vectors_ * sizeof(float);
-        CURAG_CUDA_CHECK(cudaMalloc(&d_corpus_, corpus_bytes));
 
-        CURAG_CUDA_CHECK(cudaMemcpy(d_corpus_, corpus, corpus_bytes, cudaMemcpyHostToDevice));
+        std::size_t corpus_count =
+            static_cast<std::size_t>(num_vectors_) * dim_;
 
-        // Normalize the corpus vectors in-place on the GPU - ONCE
-        l2_normalize(d_corpus_, num_vectors_, dim_);
+        corpus_buffer_.resize(corpus_count);
+
+        CURAG_CUDA_CHECK(cudaMemcpy(
+            corpus_buffer_.data(),
+            corpus,
+            corpus_count * sizeof(float),
+            cudaMemcpyHostToDevice));
+
+        // Normalize corpus once at index build time.
+        l2_normalize(corpus_buffer_.data(), num_vectors_, dim_);
 
         CURAG_CUDA_CHECK(cudaDeviceSynchronize());
     }
@@ -111,40 +79,30 @@ namespace curag
             throw std::runtime_error("k must be <= num_vectors");
         }
 
-        float *d_query = nullptr;
-        float *d_scores = nullptr;
-        float *d_topk_values = nullptr;
-        int *d_topk_indices = nullptr;
-
-        size_t query_bytes = dim_ * sizeof(float);
-        size_t scores_bytes = num_vectors_ * sizeof(float);
-        size_t topk_values_bytes = k * sizeof(float);
-        size_t topk_indices_bytes = k * sizeof(int);
-
-        CURAG_CUDA_CHECK(cudaMalloc(&d_query, query_bytes));
-        CURAG_CUDA_CHECK(cudaMalloc(&d_scores, scores_bytes));
-        CURAG_CUDA_CHECK(cudaMalloc(&d_topk_values, topk_values_bytes));
-        CURAG_CUDA_CHECK(cudaMalloc(&d_topk_indices, topk_indices_bytes));
+        query_buffer_.resize(static_cast<std::size_t>(dim_));
+        scores_buffer_.resize(static_cast<std::size_t>(num_vectors_));
+        topk_values_buffer_.resize(static_cast<std::size_t>(k));
+        topk_indices_buffer_.resize(static_cast<std::size_t>(k));
 
         CURAG_CUDA_CHECK(cudaMemcpy(
-            d_query,
+            query_buffer_.data(),
             query,
-            query_bytes,
+            static_cast<std::size_t>(dim_) * sizeof(float),
             cudaMemcpyHostToDevice));
 
-        l2_normalize(d_query, 1, dim_);
+        l2_normalize(query_buffer_.data(), 1, dim_);
 
         cosine_similarity(
-            d_query,
-            d_corpus_,
-            d_scores,
+            query_buffer_.data(),
+            corpus_buffer_.data(),
+            scores_buffer_.data(),
             num_vectors_,
             dim_);
 
         topk(
-            d_scores,
-            d_topk_values,
-            d_topk_indices,
+            scores_buffer_.data(),
+            topk_values_buffer_.data(),
+            topk_indices_buffer_.data(),
             num_vectors_,
             k);
 
@@ -156,20 +114,15 @@ namespace curag
 
         CURAG_CUDA_CHECK(cudaMemcpy(
             result.values.data(),
-            d_topk_values,
-            topk_values_bytes,
+            topk_values_buffer_.data(),
+            static_cast<std::size_t>(k) * sizeof(float),
             cudaMemcpyDeviceToHost));
 
         CURAG_CUDA_CHECK(cudaMemcpy(
             result.indices.data(),
-            d_topk_indices,
-            topk_indices_bytes,
+            topk_indices_buffer_.data(),
+            static_cast<std::size_t>(k) * sizeof(int),
             cudaMemcpyDeviceToHost));
-
-        CURAG_CUDA_CHECK(cudaFree(d_query));
-        CURAG_CUDA_CHECK(cudaFree(d_scores));
-        CURAG_CUDA_CHECK(cudaFree(d_topk_values));
-        CURAG_CUDA_CHECK(cudaFree(d_topk_indices));
 
         return result;
     }
@@ -186,6 +139,7 @@ namespace curag
 
     bool Index::is_built() const
     {
-        return d_corpus_ != nullptr && num_vectors_ > 0;
+        return !corpus_buffer_.empty() && num_vectors_ > 0;
     }
-}
+
+} // namespace curag

@@ -16,3 +16,5 @@ add_test(search_topk_pipeline "/home/ahmad/cuRAG/build-linux/test_search_topk_pi
 set_tests_properties(search_topk_pipeline PROPERTIES  _BACKTRACE_TRIPLES "/home/ahmad/cuRAG/CMakeLists.txt;94;add_test;/home/ahmad/cuRAG/CMakeLists.txt;0;")
 add_test(index "/home/ahmad/cuRAG/build-linux/test_index")
 set_tests_properties(index PROPERTIES  _BACKTRACE_TRIPLES "/home/ahmad/cuRAG/CMakeLists.txt;111;add_test;/home/ahmad/cuRAG/CMakeLists.txt;0;")
+add_test(device_buffer "/home/ahmad/cuRAG/build-linux/test_device_buffer")
+set_tests_properties(device_buffer PROPERTIES  _BACKTRACE_TRIPLES "/home/ahmad/cuRAG/CMakeLists.txt;121;add_test;/home/ahmad/cuRAG/CMakeLists.txt;0;")
