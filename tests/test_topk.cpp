@@ -195,6 +195,7 @@ int main()
     test_k_1();
     test_k_equals_num_scores();
     test_invalid_inputs();
+    test_large_random_topk();
 
     std::cout << "All top-K tests passed.\n";
     return 0;
