@@ -82,5 +82,8 @@ int main()
     run_benchmark(10'000, 10);
     run_benchmark(100'000, 10);
 
+    run_benchmark(10'000, 100);
+    run_benchmark(100'000, 100);
+
     return 0;
 }

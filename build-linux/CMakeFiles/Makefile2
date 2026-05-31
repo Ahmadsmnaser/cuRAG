@@ -72,6 +72,7 @@ all: CMakeFiles/test_topk.dir/all
 all: CMakeFiles/benchmark_cosine_similarity.dir/all
 all: CMakeFiles/benchmark_topk.dir/all
 all: CMakeFiles/test_search_topk_pipeline.dir/all
+all: CMakeFiles/benchmark_search_pipeline.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -88,6 +89,7 @@ clean: CMakeFiles/test_topk.dir/clean
 clean: CMakeFiles/benchmark_cosine_similarity.dir/clean
 clean: CMakeFiles/benchmark_topk.dir/clean
 clean: CMakeFiles/test_search_topk_pipeline.dir/clean
+clean: CMakeFiles/benchmark_search_pipeline.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -97,7 +99,7 @@ clean: CMakeFiles/test_search_topk_pipeline.dir/clean
 CMakeFiles/curag.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=7,8,9,10 "Built target curag"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=10,11,12,13 "Built target curag"
 .PHONY : CMakeFiles/curag.dir/all
 
 # Build rule for subdir invocation for target.
@@ -123,7 +125,7 @@ CMakeFiles/curag.dir/clean:
 CMakeFiles/curag_demo.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_demo.dir/build.make CMakeFiles/curag_demo.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_demo.dir/build.make CMakeFiles/curag_demo.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=11,12,13 "Built target curag_demo"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=14,15,16 "Built target curag_demo"
 .PHONY : CMakeFiles/curag_demo.dir/all
 
 # Build rule for subdir invocation for target.
@@ -149,7 +151,7 @@ CMakeFiles/curag_demo.dir/clean:
 CMakeFiles/test_cosine_similarity.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=14,15,16 "Built target test_cosine_similarity"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=17,18,19 "Built target test_cosine_similarity"
 .PHONY : CMakeFiles/test_cosine_similarity.dir/all
 
 # Build rule for subdir invocation for target.
@@ -175,7 +177,7 @@ CMakeFiles/test_cosine_similarity.dir/clean:
 CMakeFiles/test_normalize.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_normalize.dir/build.make CMakeFiles/test_normalize.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_normalize.dir/build.make CMakeFiles/test_normalize.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=17,18,19 "Built target test_normalize"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=20,21,22 "Built target test_normalize"
 .PHONY : CMakeFiles/test_normalize.dir/all
 
 # Build rule for subdir invocation for target.
@@ -201,7 +203,7 @@ CMakeFiles/test_normalize.dir/clean:
 CMakeFiles/test_search_pipeline.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=20,21,22 "Built target test_search_pipeline"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=23,24,25 "Built target test_search_pipeline"
 .PHONY : CMakeFiles/test_search_pipeline.dir/all
 
 # Build rule for subdir invocation for target.
@@ -227,7 +229,7 @@ CMakeFiles/test_search_pipeline.dir/clean:
 CMakeFiles/test_topk.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_topk.dir/build.make CMakeFiles/test_topk.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_topk.dir/build.make CMakeFiles/test_topk.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=26,27,28 "Built target test_topk"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=29,30,31 "Built target test_topk"
 .PHONY : CMakeFiles/test_topk.dir/all
 
 # Build rule for subdir invocation for target.
@@ -279,7 +281,7 @@ CMakeFiles/benchmark_cosine_similarity.dir/clean:
 CMakeFiles/benchmark_topk.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_topk.dir/build.make CMakeFiles/benchmark_topk.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_topk.dir/build.make CMakeFiles/benchmark_topk.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=4,5,6 "Built target benchmark_topk"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=7,8,9 "Built target benchmark_topk"
 .PHONY : CMakeFiles/benchmark_topk.dir/all
 
 # Build rule for subdir invocation for target.
@@ -305,7 +307,7 @@ CMakeFiles/benchmark_topk.dir/clean:
 CMakeFiles/test_search_topk_pipeline.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_topk_pipeline.dir/build.make CMakeFiles/test_search_topk_pipeline.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_topk_pipeline.dir/build.make CMakeFiles/test_search_topk_pipeline.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=23,24,25 "Built target test_search_topk_pipeline"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=26,27,28 "Built target test_search_topk_pipeline"
 .PHONY : CMakeFiles/test_search_topk_pipeline.dir/all
 
 # Build rule for subdir invocation for target.
@@ -323,6 +325,32 @@ test_search_topk_pipeline: CMakeFiles/test_search_topk_pipeline.dir/rule
 CMakeFiles/test_search_topk_pipeline.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_topk_pipeline.dir/build.make CMakeFiles/test_search_topk_pipeline.dir/clean
 .PHONY : CMakeFiles/test_search_topk_pipeline.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/benchmark_search_pipeline.dir
+
+# All Build rule for target.
+CMakeFiles/benchmark_search_pipeline.dir/all: CMakeFiles/curag.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_search_pipeline.dir/build.make CMakeFiles/benchmark_search_pipeline.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_search_pipeline.dir/build.make CMakeFiles/benchmark_search_pipeline.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=4,5,6 "Built target benchmark_search_pipeline"
+.PHONY : CMakeFiles/benchmark_search_pipeline.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/benchmark_search_pipeline.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ahmad/cuRAG/build-linux/CMakeFiles 7
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/benchmark_search_pipeline.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ahmad/cuRAG/build-linux/CMakeFiles 0
+.PHONY : CMakeFiles/benchmark_search_pipeline.dir/rule
+
+# Convenience name for target.
+benchmark_search_pipeline: CMakeFiles/benchmark_search_pipeline.dir/rule
+.PHONY : benchmark_search_pipeline
+
+# clean rule for target.
+CMakeFiles/benchmark_search_pipeline.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_search_pipeline.dir/build.make CMakeFiles/benchmark_search_pipeline.dir/clean
+.PHONY : CMakeFiles/benchmark_search_pipeline.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

@@ -86,23 +86,24 @@ The first implementation used a correctness-first baseline: one thread scanned
 all scores and maintained a sorted top-K buffer. This established the API,
 output format, and tests before introducing parallel work.
 
-The current implementation uses block-wise top-K selection. Each thread scans a
-grid-stride subset of scores and maintains a local sorted top-K list. Thread
-zero merges those lists into one block-local result. A second kernel merges the
-block-local candidates into the final top-K result.
+The current implementation uses block-wise bitonic selection. Each block loads
+up to `256` scores into shared memory and bitonic-sorts them in descending
+order. Each block emits its best `min(K, 256)` candidates. A second kernel
+merges those candidates into the final top-K result.
 
 Top-K returns both values and indices. The indices are required by the RAG
 layer to map retrieved vectors back to documents.
 
 ### Current Limits
 
-The block-local kernel allocates `256 * K` values and indices in shared memory.
-On the local NVIDIA GeForce MX250, which has `49,152` bytes of shared memory per
-block, the current layout supports up to `K = 24`. Larger values require a
-different shared-memory strategy.
+The block-local shared-memory usage is now fixed: `256` values and `256`
+indices per block. This removes the previous `K <= 24` shared-memory limit on
+the local NVIDIA GeForce MX250.
 
-The final merge stage currently runs on a single CUDA thread. This is correct
-but intentionally not the final optimized implementation.
+The final merge stage currently runs on a single CUDA thread and maintains a
+sorted insertion buffer of up to `K = 1024` results. This is correct but
+intentionally not the final optimized implementation. Its cost grows quickly
+as `K` increases.
 
 ### Top-K Baseline Benchmark
 
@@ -120,9 +121,56 @@ cmake --build build-linux --target benchmark_topk
 ./build-linux/benchmark_topk
 ```
 
-Initial local baseline for `K = 10`:
+Initial block-wise insertion baseline for `K = 10`:
 
 | Input scores | K | Top-K time |
 | ---: | ---: | ---: |
 | 10,000 | 10 | 1.40022 ms |
 | 100,000 | 10 | 9.70957 ms |
+
+Block-wise bitonic local-selection baseline:
+
+| Input scores | K | Top-K time |
+| ---: | ---: | ---: |
+| 10,000 | 10 | 0.389888 ms |
+| 100,000 | 10 | 2.23401 ms |
+| 10,000 | 100 | 8.28913 ms |
+| 100,000 | 100 | 23.6704 ms |
+
+For `K = 10`, the bitonic local-selection redesign reduced measured top-K
+latency by approximately `72%` at `10,000` scores and `77%` at `100,000`
+scores.
+
+### Integrated Search Baseline
+
+`benchmark_search_pipeline` measures the complete GPU search path:
+
+```text
+query normalization -> cosine similarity -> top-K selection
+```
+
+Corpus normalization is excluded because corpus vectors are normalized once
+when an index is built. Host-to-device transfer is also excluded. The query is
+copied back to the GPU before each timed iteration because normalization
+modifies it in place. As with the standalone top-K benchmark, top-K timing
+includes its internal temporary partial-result allocation and free.
+
+Run it with:
+
+```bash
+cmake -S . -B build-linux
+cmake --build build-linux --target benchmark_search_pipeline
+./build-linux/benchmark_search_pipeline
+```
+
+Initial local baseline for dimension `768` and `K = 10`:
+
+| Corpus vectors | Query normalization | Cosine similarity | Top-K | Total search |
+| ---: | ---: | ---: | ---: | ---: |
+| 10,000 | 0.041 ms | 2.756 ms | 0.384 ms | 3.275 ms |
+| 100,000 | 0.042 ms | 26.134 ms | 1.846 ms | 28.102 ms |
+
+At `100,000` vectors, cosine similarity dominates search latency. Top-K
+accounts for approximately `7%` of the measured total latency for `K = 10`.
+The serial merge remains a meaningful optimization target for larger values of
+`K`.
