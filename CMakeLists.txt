@@ -14,6 +14,7 @@ add_library(curag STATIC
     kernels/cosine_similarity.cu
     kernels/normalize.cu
     kernels/topk_bitonic.cu
+    src/index.cu
 )
 
 target_include_directories(curag PUBLIC include)
@@ -100,3 +101,14 @@ add_executable(benchmark_search_pipeline
 )
 
 target_link_libraries(benchmark_search_pipeline PRIVATE curag)
+
+add_executable(test_index
+    tests/test_index.cpp
+)
+
+target_link_libraries(test_index PRIVATE curag)
+
+add_test(
+    NAME index
+    COMMAND test_index
+)

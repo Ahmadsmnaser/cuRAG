@@ -256,6 +256,19 @@ benchmark_search_pipeline/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_search_pipeline.dir/build.make CMakeFiles/benchmark_search_pipeline.dir/build
 .PHONY : benchmark_search_pipeline/fast
 
+#=============================================================================
+# Target rules for targets named test_index
+
+# Build rule for target.
+test_index: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_index
+.PHONY : test_index
+
+# fast build rule for target.
+test_index/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index.dir/build.make CMakeFiles/test_index.dir/build
+.PHONY : test_index/fast
+
 benchmarks/benchmark_cosine_similarity.o: benchmarks/benchmark_cosine_similarity.cpp.o
 .PHONY : benchmarks/benchmark_cosine_similarity.o
 
@@ -400,6 +413,30 @@ kernels/topk_bitonic.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/topk_bitonic.cu.s
 .PHONY : kernels/topk_bitonic.cu.s
 
+src/index.o: src/index.cu.o
+.PHONY : src/index.o
+
+# target to build an object file
+src/index.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/src/index.cu.o
+.PHONY : src/index.cu.o
+
+src/index.i: src/index.cu.i
+.PHONY : src/index.i
+
+# target to preprocess a source file
+src/index.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/src/index.cu.i
+.PHONY : src/index.cu.i
+
+src/index.s: src/index.cu.s
+.PHONY : src/index.s
+
+# target to generate assembly for a file
+src/index.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/src/index.cu.s
+.PHONY : src/index.cu.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -447,6 +484,30 @@ tests/test_cosine_similarity.s: tests/test_cosine_similarity.cpp.s
 tests/test_cosine_similarity.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_cosine_similarity.dir/build.make CMakeFiles/test_cosine_similarity.dir/tests/test_cosine_similarity.cpp.s
 .PHONY : tests/test_cosine_similarity.cpp.s
+
+tests/test_index.o: tests/test_index.cpp.o
+.PHONY : tests/test_index.o
+
+# target to build an object file
+tests/test_index.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index.dir/build.make CMakeFiles/test_index.dir/tests/test_index.cpp.o
+.PHONY : tests/test_index.cpp.o
+
+tests/test_index.i: tests/test_index.cpp.i
+.PHONY : tests/test_index.i
+
+# target to preprocess a source file
+tests/test_index.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index.dir/build.make CMakeFiles/test_index.dir/tests/test_index.cpp.i
+.PHONY : tests/test_index.cpp.i
+
+tests/test_index.s: tests/test_index.cpp.s
+.PHONY : tests/test_index.s
+
+# target to generate assembly for a file
+tests/test_index.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index.dir/build.make CMakeFiles/test_index.dir/tests/test_index.cpp.s
+.PHONY : tests/test_index.cpp.s
 
 tests/test_normalize.o: tests/test_normalize.cpp.o
 .PHONY : tests/test_normalize.o
@@ -559,6 +620,7 @@ help:
 	@echo "... curag"
 	@echo "... curag_demo"
 	@echo "... test_cosine_similarity"
+	@echo "... test_index"
 	@echo "... test_normalize"
 	@echo "... test_search_pipeline"
 	@echo "... test_search_topk_pipeline"
@@ -581,12 +643,18 @@ help:
 	@echo "... kernels/topk_bitonic.o"
 	@echo "... kernels/topk_bitonic.i"
 	@echo "... kernels/topk_bitonic.s"
+	@echo "... src/index.o"
+	@echo "... src/index.i"
+	@echo "... src/index.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
 	@echo "... tests/test_cosine_similarity.o"
 	@echo "... tests/test_cosine_similarity.i"
 	@echo "... tests/test_cosine_similarity.s"
+	@echo "... tests/test_index.o"
+	@echo "... tests/test_index.i"
+	@echo "... tests/test_index.s"
 	@echo "... tests/test_normalize.o"
 	@echo "... tests/test_normalize.i"
 	@echo "... tests/test_normalize.s"
