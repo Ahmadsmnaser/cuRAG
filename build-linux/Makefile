@@ -295,6 +295,19 @@ benchmark_index_search/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_index_search.dir/build.make CMakeFiles/benchmark_index_search.dir/build
 .PHONY : benchmark_index_search/fast
 
+#=============================================================================
+# Target rules for targets named test_index_save_load
+
+# Build rule for target.
+test_index_save_load: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_index_save_load
+.PHONY : test_index_save_load
+
+# fast build rule for target.
+test_index_save_load/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_save_load.dir/build.make CMakeFiles/test_index_save_load.dir/build
+.PHONY : test_index_save_load/fast
+
 benchmarks/benchmark_cosine_similarity.o: benchmarks/benchmark_cosine_similarity.cpp.o
 .PHONY : benchmarks/benchmark_cosine_similarity.o
 
@@ -583,6 +596,30 @@ tests/test_index.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index.dir/build.make CMakeFiles/test_index.dir/tests/test_index.cpp.s
 .PHONY : tests/test_index.cpp.s
 
+tests/test_index_save_load.o: tests/test_index_save_load.cpp.o
+.PHONY : tests/test_index_save_load.o
+
+# target to build an object file
+tests/test_index_save_load.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_save_load.dir/build.make CMakeFiles/test_index_save_load.dir/tests/test_index_save_load.cpp.o
+.PHONY : tests/test_index_save_load.cpp.o
+
+tests/test_index_save_load.i: tests/test_index_save_load.cpp.i
+.PHONY : tests/test_index_save_load.i
+
+# target to preprocess a source file
+tests/test_index_save_load.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_save_load.dir/build.make CMakeFiles/test_index_save_load.dir/tests/test_index_save_load.cpp.i
+.PHONY : tests/test_index_save_load.cpp.i
+
+tests/test_index_save_load.s: tests/test_index_save_load.cpp.s
+.PHONY : tests/test_index_save_load.s
+
+# target to generate assembly for a file
+tests/test_index_save_load.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_save_load.dir/build.make CMakeFiles/test_index_save_load.dir/tests/test_index_save_load.cpp.s
+.PHONY : tests/test_index_save_load.cpp.s
+
 tests/test_normalize.o: tests/test_normalize.cpp.o
 .PHONY : tests/test_normalize.o
 
@@ -697,6 +734,7 @@ help:
 	@echo "... test_cosine_similarity"
 	@echo "... test_device_buffer"
 	@echo "... test_index"
+	@echo "... test_index_save_load"
 	@echo "... test_normalize"
 	@echo "... test_search_pipeline"
 	@echo "... test_search_topk_pipeline"
@@ -737,6 +775,9 @@ help:
 	@echo "... tests/test_index.o"
 	@echo "... tests/test_index.i"
 	@echo "... tests/test_index.s"
+	@echo "... tests/test_index_save_load.o"
+	@echo "... tests/test_index_save_load.i"
+	@echo "... tests/test_index_save_load.s"
 	@echo "... tests/test_normalize.o"
 	@echo "... tests/test_normalize.i"
 	@echo "... tests/test_normalize.s"

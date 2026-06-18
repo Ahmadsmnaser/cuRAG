@@ -128,3 +128,14 @@ add_executable(benchmark_index_search
 )
 
 target_link_libraries(benchmark_index_search PRIVATE curag)
+
+add_executable(test_index_save_load
+    tests/test_index_save_load.cpp
+)
+
+target_link_libraries(test_index_save_load PRIVATE curag)
+
+add_test(
+    NAME index_save_load
+    COMMAND test_index_save_load
+)

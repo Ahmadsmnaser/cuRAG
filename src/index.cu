@@ -8,6 +8,11 @@
 
 #include <stdexcept>
 
+#include <fstream>
+#include <vector>
+#include <cstdint>
+#include <cstring>
+
 namespace curag
 {
 
@@ -140,6 +145,122 @@ namespace curag
     bool Index::is_built() const
     {
         return !corpus_buffer_.empty() && num_vectors_ > 0;
+    }
+
+    namespace
+    {
+        constexpr char INDEX_MAGIC[8] = { 'C', 'U', 'R', 'A', 'G', 'I', 'D', 'N'};
+        constexpr std::uint32_t INDEX_VERSION = 1;
+    }
+
+    void Index::save(const std::string &path) const
+    {
+        if(!is_built())
+        {
+            throw std::runtime_error("Index must be built before saving");
+        }
+        std::ofstream ofs(path, std::ios::binary);
+        if(!ofs)
+        {
+            throw std::runtime_error("Failed to open file for writing: " + path);
+        }
+        std::int32_t dim_i32 = static_cast<std::int32_t>(dim_);
+        std::int32_t num_vectors_i32 = static_cast<std::int32_t>(num_vectors_);
+
+        ofs.write(INDEX_MAGIC, sizeof(INDEX_MAGIC));
+        ofs.write(reinterpret_cast<const char*>(&INDEX_VERSION), sizeof(INDEX_VERSION));
+        ofs.write(reinterpret_cast<const char*>(&dim_i32), sizeof(dim_i32));
+        ofs.write(reinterpret_cast<const char*>(&num_vectors_i32), sizeof(num_vectors_i32));
+
+        std::size_t corpus_count =
+            static_cast<std::size_t>(num_vectors_) * dim_;
+
+        std::vector<float> host_corpus(corpus_count);
+
+        CURAG_CUDA_CHECK(cudaMemcpy(
+            host_corpus.data(),
+            corpus_buffer_.data(),
+            corpus_count * sizeof(float),
+            cudaMemcpyDeviceToHost));
+
+        ofs.write(reinterpret_cast<const char*>(host_corpus.data()), corpus_count * sizeof(float));
+        if(!ofs)
+        {
+            throw std::runtime_error("Failed to write index data to file: " + path);
+        }
+    }
+
+    Index Index::load(const std::string &path)
+    {
+        std::ifstream in(path, std::ios::binary);
+        if (!in)
+        {
+            throw std::runtime_error("Failed to open index file for reading");
+        }
+
+        char magic[8];
+        std::uint32_t version = 0;
+        std::int32_t dim = 0;
+        std::int32_t num_vectors = 0;
+
+        in.read(magic, sizeof(magic));
+        in.read(reinterpret_cast<char *>(&version), sizeof(version));
+        in.read(reinterpret_cast<char *>(&dim), sizeof(dim));
+        in.read(reinterpret_cast<char *>(&num_vectors), sizeof(num_vectors));
+
+        if (!in)
+        {
+            throw std::runtime_error("Invalid or truncated index header");
+        }
+
+        if (std::memcmp(magic, INDEX_MAGIC, sizeof(INDEX_MAGIC)) != 0)
+        {
+            throw std::runtime_error("Invalid cuRAG index file magic");
+        }
+
+        if (version != INDEX_VERSION)
+        {
+            throw std::runtime_error("Unsupported cuRAG index version");
+        }
+
+        if (dim <= 0 || dim > 1024)
+        {
+            throw std::runtime_error("Invalid dimension in index file");
+        }
+
+        if (num_vectors <= 0)
+        {
+            throw std::runtime_error("Invalid vector count in index file");
+        }
+
+        std::size_t corpus_count =
+            static_cast<std::size_t>(num_vectors) * dim;
+
+        std::vector<float> host_corpus(corpus_count);
+
+        in.read(
+            reinterpret_cast<char *>(host_corpus.data()),
+            static_cast<std::streamsize>(corpus_count * sizeof(float)));
+
+        if (!in)
+        {
+            throw std::runtime_error("Invalid or truncated index corpus data");
+        }
+
+        Index index(dim);
+
+        index.num_vectors_ = num_vectors;
+        index.corpus_buffer_.resize(corpus_count);
+
+        CURAG_CUDA_CHECK(cudaMemcpy(
+            index.corpus_buffer_.data(),
+            host_corpus.data(),
+            corpus_count * sizeof(float),
+            cudaMemcpyHostToDevice));
+
+        CURAG_CUDA_CHECK(cudaDeviceSynchronize());
+
+        return index;
     }
 
 } // namespace curag

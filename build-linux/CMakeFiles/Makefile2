@@ -76,6 +76,7 @@ all: CMakeFiles/benchmark_search_pipeline.dir/all
 all: CMakeFiles/test_index.dir/all
 all: CMakeFiles/test_device_buffer.dir/all
 all: CMakeFiles/benchmark_index_search.dir/all
+all: CMakeFiles/test_index_save_load.dir/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
@@ -96,6 +97,7 @@ clean: CMakeFiles/benchmark_search_pipeline.dir/clean
 clean: CMakeFiles/test_index.dir/clean
 clean: CMakeFiles/test_device_buffer.dir/clean
 clean: CMakeFiles/benchmark_index_search.dir/clean
+clean: CMakeFiles/test_index_save_load.dir/clean
 .PHONY : clean
 
 #=============================================================================
@@ -183,7 +185,7 @@ CMakeFiles/test_cosine_similarity.dir/clean:
 CMakeFiles/test_normalize.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_normalize.dir/build.make CMakeFiles/test_normalize.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_normalize.dir/build.make CMakeFiles/test_normalize.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=30,31,32 "Built target test_normalize"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=33,34,35 "Built target test_normalize"
 .PHONY : CMakeFiles/test_normalize.dir/all
 
 # Build rule for subdir invocation for target.
@@ -209,7 +211,7 @@ CMakeFiles/test_normalize.dir/clean:
 CMakeFiles/test_search_pipeline.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_pipeline.dir/build.make CMakeFiles/test_search_pipeline.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=33,34,35 "Built target test_search_pipeline"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=36,37,38 "Built target test_search_pipeline"
 .PHONY : CMakeFiles/test_search_pipeline.dir/all
 
 # Build rule for subdir invocation for target.
@@ -235,7 +237,7 @@ CMakeFiles/test_search_pipeline.dir/clean:
 CMakeFiles/test_topk.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_topk.dir/build.make CMakeFiles/test_topk.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_topk.dir/build.make CMakeFiles/test_topk.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=39,40,41 "Built target test_topk"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=42,43,44 "Built target test_topk"
 .PHONY : CMakeFiles/test_topk.dir/all
 
 # Build rule for subdir invocation for target.
@@ -313,7 +315,7 @@ CMakeFiles/benchmark_topk.dir/clean:
 CMakeFiles/test_search_topk_pipeline.dir/all: CMakeFiles/curag.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_topk_pipeline.dir/build.make CMakeFiles/test_search_topk_pipeline.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_search_topk_pipeline.dir/build.make CMakeFiles/test_search_topk_pipeline.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=36,37,38 "Built target test_search_topk_pipeline"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=39,40,41 "Built target test_search_topk_pipeline"
 .PHONY : CMakeFiles/test_search_topk_pipeline.dir/all
 
 # Build rule for subdir invocation for target.
@@ -435,6 +437,32 @@ benchmark_index_search: CMakeFiles/benchmark_index_search.dir/rule
 CMakeFiles/benchmark_index_search.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_index_search.dir/build.make CMakeFiles/benchmark_index_search.dir/clean
 .PHONY : CMakeFiles/benchmark_index_search.dir/clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/test_index_save_load.dir
+
+# All Build rule for target.
+CMakeFiles/test_index_save_load.dir/all: CMakeFiles/curag.dir/all
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_save_load.dir/build.make CMakeFiles/test_index_save_load.dir/depend
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_save_load.dir/build.make CMakeFiles/test_index_save_load.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/ahmad/cuRAG/build-linux/CMakeFiles --progress-num=30,31,32 "Built target test_index_save_load"
+.PHONY : CMakeFiles/test_index_save_load.dir/all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/test_index_save_load.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ahmad/cuRAG/build-linux/CMakeFiles 8
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test_index_save_load.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ahmad/cuRAG/build-linux/CMakeFiles 0
+.PHONY : CMakeFiles/test_index_save_load.dir/rule
+
+# Convenience name for target.
+test_index_save_load: CMakeFiles/test_index_save_load.dir/rule
+.PHONY : test_index_save_load
+
+# clean rule for target.
+CMakeFiles/test_index_save_load.dir/clean:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_save_load.dir/build.make CMakeFiles/test_index_save_load.dir/clean
+.PHONY : CMakeFiles/test_index_save_load.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

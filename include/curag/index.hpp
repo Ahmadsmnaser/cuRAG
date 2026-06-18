@@ -2,6 +2,7 @@
 #include "curag/device_buffer.hpp"
 #include <vector>
 #include <cstddef>
+#include <string>
 
 namespace curag
 {
@@ -27,6 +28,9 @@ namespace curag
         void build(const float *corpus, int num_vectors); // Method to build the index from a given corpus of vectors, where 'corpus' is a pointer to the vector data and 'num_vectors' is the number of vectors in the corpus
 
         SearchResult search(const float *query, int k) const; // Method to perform a search on the index using a given query vector, where 'query' is a pointer to the query vector and 'k' is the number of nearest neighbors to return
+
+        void save(const std::string &path) const;
+        static Index load(const std::string &path);
 
         int dim() const;
         int num_vectors() const;
