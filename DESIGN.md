@@ -240,10 +240,11 @@ query host-to-device copy
 -> K values and K indices copied back to the host
 ```
 
-The current implementation is deliberately synchronous. The first batch API
-is implemented as a sequential wrapper around `Index::search()`; CUDA streams,
-true multi-query GPU batching, and further temporary-buffer reuse remain
-Phase 3 work.
+The single-query API remains synchronous. Batch search has progressed from a
+sequential API wrapper to a partially batched GPU path. Query transfer,
+normalization, and cosine similarity are batched; Top-K selection still loops
+over queries on the host and launches the existing single-query Top-K path.
+CUDA streams and a fully batched Top-K implementation remain Phase 3 work.
 
 ### Synchronous Index Search Baseline
 
@@ -310,6 +311,34 @@ the same per-query search path. The small differences are normal run-to-run
 variation and host-side result-packing overhead, not evidence of GPU batching.
 These measurements establish the baseline that a future stream-based or
 multi-query kernel implementation must improve.
+
+### Batch Search Version 2
+
+Version 2 uploads all queries in one transfer, normalizes them in one kernel
+launch, and computes the complete `[num_queries, num_vectors]` score matrix
+with a two-dimensional CUDA grid. It then copies only the final
+`num_queries * K` values and indices back to the host.
+
+The Top-K stage is not fully batched yet. `batched_topk()` loops over queries on
+the host and invokes the existing GPU Top-K implementation once per score row.
+The current speedup therefore comes primarily from batched query transfer,
+normalization, and cosine-similarity execution rather than concurrent Top-K
+selection.
+
+Version 2 results for `100` queries, dimension `768`, and `K = 10`:
+
+| Corpus vectors | Method | Total time | Latency | Throughput | Relative speedup |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 10,000 | Repeated `search()` | 386.687 ms | 3.867 ms/query | 258.607 queries/sec | 1.000x |
+| 10,000 | `search_batch()` v2 | 224.063 ms | 2.241 ms/query | 446.304 queries/sec | 1.726x |
+| 100,000 | Repeated `search()` | 2,820.624 ms | 28.206 ms/query | 35.453 queries/sec | 1.000x |
+| 100,000 | `search_batch()` v2 | 1,771.905 ms | 17.719 ms/query | 56.436 queries/sec | 1.592x |
+
+Compared with repeated synchronous search in the same benchmark run, version
+2 improved throughput by approximately `73%` for `10,000` corpus vectors and
+`59%` for `100,000` corpus vectors. These are local development measurements,
+not production throughput claims. The next optimization target is replacing
+the host loop in `batched_topk()` with a genuinely batched GPU selection path.
 
 ### Index Serialization
 

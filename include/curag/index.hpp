@@ -55,6 +55,11 @@ namespace curag
         mutable DeviceBuffer<float> scores_buffer_;
         mutable DeviceBuffer<float> topk_values_buffer_;
         mutable DeviceBuffer<int> topk_indices_buffer_;
+
+        mutable DeviceBuffer<float> batch_queries_buffer_;
+        mutable DeviceBuffer<float> batch_scores_buffer_;
+        mutable DeviceBuffer<float> batch_topk_values_buffer_;
+        mutable DeviceBuffer<int> batch_topk_indices_buffer_;
     };
 
 } // namespace curag

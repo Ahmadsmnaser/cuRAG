@@ -3,6 +3,8 @@
 #include "curag/normalize.hpp"
 #include "curag/topk.hpp"
 #include "curag/cuda_utils.hpp"
+#include "curag/batched_cosine_similarity.hpp"
+#include "curag/batched_topk.hpp"
 
 #include <cuda_runtime.h>
 
@@ -132,7 +134,11 @@ namespace curag
         return result;
     }
 
-    BatchSearchResult Index::search_batch(const float *queries, int num_queries, int k) const{
+    BatchSearchResult Index::search_batch(
+        const float *queries,
+        int num_queries,
+        int k) const
+    {
         if (!is_built())
         {
             throw std::runtime_error("Index must be built before batch search");
@@ -158,29 +164,68 @@ namespace curag
             throw std::runtime_error("k must be <= num_vectors");
         }
 
+        std::size_t queries_count =
+            static_cast<std::size_t>(num_queries) * dim_;
+
+        std::size_t scores_count =
+            static_cast<std::size_t>(num_queries) * num_vectors_;
+
+        std::size_t output_count =
+            static_cast<std::size_t>(num_queries) * k;
+
+        batch_queries_buffer_.resize(queries_count);
+        batch_scores_buffer_.resize(scores_count);
+        batch_topk_values_buffer_.resize(output_count);
+        batch_topk_indices_buffer_.resize(output_count);
+
+        CURAG_CUDA_CHECK(cudaMemcpy(
+            batch_queries_buffer_.data(),
+            queries,
+            queries_count * sizeof(float),
+            cudaMemcpyHostToDevice));
+
+        // Normalize all queries in one kernel launch.
+        l2_normalize(
+            batch_queries_buffer_.data(),
+            num_queries,
+            dim_);
+
+        batched_cosine_similarity(
+            batch_queries_buffer_.data(),
+            corpus_buffer_.data(),
+            batch_scores_buffer_.data(),
+            num_queries,
+            num_vectors_,
+            dim_);
+
+        batched_topk(
+            batch_scores_buffer_.data(),
+            batch_topk_values_buffer_.data(),
+            batch_topk_indices_buffer_.data(),
+            num_queries,
+            num_vectors_,
+            k);
+
+        CURAG_CUDA_CHECK(cudaDeviceSynchronize());
+
         BatchSearchResult batch;
         batch.num_queries = num_queries;
         batch.k = k;
 
-        batch.values.resize(static_cast<std::size_t>(num_queries) * k);
-        batch.indices.resize(static_cast<std::size_t>(num_queries) * k);
+        batch.values.resize(output_count);
+        batch.indices.resize(output_count);
 
-        for (int q = 0; q < num_queries; ++q)
-        {
-            const float *query =
-                queries + static_cast<std::size_t>(q) * dim_;
+        CURAG_CUDA_CHECK(cudaMemcpy(
+            batch.values.data(),
+            batch_topk_values_buffer_.data(),
+            output_count * sizeof(float),
+            cudaMemcpyDeviceToHost));
 
-            SearchResult result = search(query, k);
-
-            for (int j = 0; j < k; ++j)
-            {
-                std::size_t out_index =
-                    static_cast<std::size_t>(q) * k + j;
-
-                batch.values[out_index] = result.values[j];
-                batch.indices[out_index] = result.indices[j];
-            }
-        }
+        CURAG_CUDA_CHECK(cudaMemcpy(
+            batch.indices.data(),
+            batch_topk_indices_buffer_.data(),
+            output_count * sizeof(int),
+            cudaMemcpyDeviceToHost));
 
         return batch;
     }
