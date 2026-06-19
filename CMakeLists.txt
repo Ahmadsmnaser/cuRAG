@@ -14,6 +14,8 @@ add_library(curag STATIC
     kernels/cosine_similarity.cu
     kernels/normalize.cu
     kernels/topk_bitonic.cu
+    kernels/batched_cosine_similarity.cu
+    src/batched_topk.cu
     src/index.cu
 )
 
@@ -156,3 +158,26 @@ add_executable(benchmark_index_batch
 )
 
 target_link_libraries(benchmark_index_batch PRIVATE curag)
+
+
+add_executable(test_batched_cosine_similarity
+    tests/test_batched_cosine_similarity.cpp
+)
+
+target_link_libraries(test_batched_cosine_similarity PRIVATE curag)
+
+add_test(
+    NAME batched_cosine_similarity
+    COMMAND test_batched_cosine_similarity
+)
+
+add_executable(test_batched_topk
+    tests/test_batched_topk.cpp
+)
+
+target_link_libraries(test_batched_topk PRIVATE curag)
+
+add_test(
+    NAME batched_topk
+    COMMAND test_batched_topk
+)

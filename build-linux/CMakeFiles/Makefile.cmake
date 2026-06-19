@@ -60,4 +60,6 @@ set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/test_index_save_load.dir/DependInfo.cmake"
   "CMakeFiles/test_index_batch.dir/DependInfo.cmake"
   "CMakeFiles/benchmark_index_batch.dir/DependInfo.cmake"
+  "CMakeFiles/test_batched_cosine_similarity.dir/DependInfo.cmake"
+  "CMakeFiles/test_batched_topk.dir/DependInfo.cmake"
   )

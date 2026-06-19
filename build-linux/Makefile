@@ -334,6 +334,32 @@ benchmark_index_batch/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_index_batch.dir/build.make CMakeFiles/benchmark_index_batch.dir/build
 .PHONY : benchmark_index_batch/fast
 
+#=============================================================================
+# Target rules for targets named test_batched_cosine_similarity
+
+# Build rule for target.
+test_batched_cosine_similarity: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_batched_cosine_similarity
+.PHONY : test_batched_cosine_similarity
+
+# fast build rule for target.
+test_batched_cosine_similarity/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batched_cosine_similarity.dir/build.make CMakeFiles/test_batched_cosine_similarity.dir/build
+.PHONY : test_batched_cosine_similarity/fast
+
+#=============================================================================
+# Target rules for targets named test_batched_topk
+
+# Build rule for target.
+test_batched_topk: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_batched_topk
+.PHONY : test_batched_topk
+
+# fast build rule for target.
+test_batched_topk/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batched_topk.dir/build.make CMakeFiles/test_batched_topk.dir/build
+.PHONY : test_batched_topk/fast
+
 benchmarks/benchmark_cosine_similarity.o: benchmarks/benchmark_cosine_similarity.cpp.o
 .PHONY : benchmarks/benchmark_cosine_similarity.o
 
@@ -454,6 +480,30 @@ benchmarks/benchmark_topk.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/benchmark_topk.dir/build.make CMakeFiles/benchmark_topk.dir/benchmarks/benchmark_topk.cpp.s
 .PHONY : benchmarks/benchmark_topk.cpp.s
 
+kernels/batched_cosine_similarity.o: kernels/batched_cosine_similarity.cu.o
+.PHONY : kernels/batched_cosine_similarity.o
+
+# target to build an object file
+kernels/batched_cosine_similarity.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/batched_cosine_similarity.cu.o
+.PHONY : kernels/batched_cosine_similarity.cu.o
+
+kernels/batched_cosine_similarity.i: kernels/batched_cosine_similarity.cu.i
+.PHONY : kernels/batched_cosine_similarity.i
+
+# target to preprocess a source file
+kernels/batched_cosine_similarity.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/batched_cosine_similarity.cu.i
+.PHONY : kernels/batched_cosine_similarity.cu.i
+
+kernels/batched_cosine_similarity.s: kernels/batched_cosine_similarity.cu.s
+.PHONY : kernels/batched_cosine_similarity.s
+
+# target to generate assembly for a file
+kernels/batched_cosine_similarity.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/batched_cosine_similarity.cu.s
+.PHONY : kernels/batched_cosine_similarity.cu.s
+
 kernels/cosine_similarity.o: kernels/cosine_similarity.cu.o
 .PHONY : kernels/cosine_similarity.o
 
@@ -526,6 +576,30 @@ kernels/topk_bitonic.cu.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/kernels/topk_bitonic.cu.s
 .PHONY : kernels/topk_bitonic.cu.s
 
+src/batched_topk.o: src/batched_topk.cu.o
+.PHONY : src/batched_topk.o
+
+# target to build an object file
+src/batched_topk.cu.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/src/batched_topk.cu.o
+.PHONY : src/batched_topk.cu.o
+
+src/batched_topk.i: src/batched_topk.cu.i
+.PHONY : src/batched_topk.i
+
+# target to preprocess a source file
+src/batched_topk.cu.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/src/batched_topk.cu.i
+.PHONY : src/batched_topk.cu.i
+
+src/batched_topk.s: src/batched_topk.cu.s
+.PHONY : src/batched_topk.s
+
+# target to generate assembly for a file
+src/batched_topk.cu.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag.dir/build.make CMakeFiles/curag.dir/src/batched_topk.cu.s
+.PHONY : src/batched_topk.cu.s
+
 src/index.o: src/index.cu.o
 .PHONY : src/index.o
 
@@ -573,6 +647,54 @@ src/main.s: src/main.cpp.s
 src/main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/curag_demo.dir/build.make CMakeFiles/curag_demo.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
+
+tests/test_batched_cosine_similarity.o: tests/test_batched_cosine_similarity.cpp.o
+.PHONY : tests/test_batched_cosine_similarity.o
+
+# target to build an object file
+tests/test_batched_cosine_similarity.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batched_cosine_similarity.dir/build.make CMakeFiles/test_batched_cosine_similarity.dir/tests/test_batched_cosine_similarity.cpp.o
+.PHONY : tests/test_batched_cosine_similarity.cpp.o
+
+tests/test_batched_cosine_similarity.i: tests/test_batched_cosine_similarity.cpp.i
+.PHONY : tests/test_batched_cosine_similarity.i
+
+# target to preprocess a source file
+tests/test_batched_cosine_similarity.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batched_cosine_similarity.dir/build.make CMakeFiles/test_batched_cosine_similarity.dir/tests/test_batched_cosine_similarity.cpp.i
+.PHONY : tests/test_batched_cosine_similarity.cpp.i
+
+tests/test_batched_cosine_similarity.s: tests/test_batched_cosine_similarity.cpp.s
+.PHONY : tests/test_batched_cosine_similarity.s
+
+# target to generate assembly for a file
+tests/test_batched_cosine_similarity.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batched_cosine_similarity.dir/build.make CMakeFiles/test_batched_cosine_similarity.dir/tests/test_batched_cosine_similarity.cpp.s
+.PHONY : tests/test_batched_cosine_similarity.cpp.s
+
+tests/test_batched_topk.o: tests/test_batched_topk.cpp.o
+.PHONY : tests/test_batched_topk.o
+
+# target to build an object file
+tests/test_batched_topk.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batched_topk.dir/build.make CMakeFiles/test_batched_topk.dir/tests/test_batched_topk.cpp.o
+.PHONY : tests/test_batched_topk.cpp.o
+
+tests/test_batched_topk.i: tests/test_batched_topk.cpp.i
+.PHONY : tests/test_batched_topk.i
+
+# target to preprocess a source file
+tests/test_batched_topk.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batched_topk.dir/build.make CMakeFiles/test_batched_topk.dir/tests/test_batched_topk.cpp.i
+.PHONY : tests/test_batched_topk.cpp.i
+
+tests/test_batched_topk.s: tests/test_batched_topk.cpp.s
+.PHONY : tests/test_batched_topk.s
+
+# target to generate assembly for a file
+tests/test_batched_topk.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_batched_topk.dir/build.make CMakeFiles/test_batched_topk.dir/tests/test_batched_topk.cpp.s
+.PHONY : tests/test_batched_topk.cpp.s
 
 tests/test_cosine_similarity.o: tests/test_cosine_similarity.cpp.o
 .PHONY : tests/test_cosine_similarity.o
@@ -806,6 +928,8 @@ help:
 	@echo "... benchmark_topk"
 	@echo "... curag"
 	@echo "... curag_demo"
+	@echo "... test_batched_cosine_similarity"
+	@echo "... test_batched_topk"
 	@echo "... test_cosine_similarity"
 	@echo "... test_device_buffer"
 	@echo "... test_index"
@@ -830,6 +954,9 @@ help:
 	@echo "... benchmarks/benchmark_topk.o"
 	@echo "... benchmarks/benchmark_topk.i"
 	@echo "... benchmarks/benchmark_topk.s"
+	@echo "... kernels/batched_cosine_similarity.o"
+	@echo "... kernels/batched_cosine_similarity.i"
+	@echo "... kernels/batched_cosine_similarity.s"
 	@echo "... kernels/cosine_similarity.o"
 	@echo "... kernels/cosine_similarity.i"
 	@echo "... kernels/cosine_similarity.s"
@@ -839,12 +966,21 @@ help:
 	@echo "... kernels/topk_bitonic.o"
 	@echo "... kernels/topk_bitonic.i"
 	@echo "... kernels/topk_bitonic.s"
+	@echo "... src/batched_topk.o"
+	@echo "... src/batched_topk.i"
+	@echo "... src/batched_topk.s"
 	@echo "... src/index.o"
 	@echo "... src/index.i"
 	@echo "... src/index.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... tests/test_batched_cosine_similarity.o"
+	@echo "... tests/test_batched_cosine_similarity.i"
+	@echo "... tests/test_batched_cosine_similarity.s"
+	@echo "... tests/test_batched_topk.o"
+	@echo "... tests/test_batched_topk.i"
+	@echo "... tests/test_batched_topk.s"
 	@echo "... tests/test_cosine_similarity.o"
 	@echo "... tests/test_cosine_similarity.i"
 	@echo "... tests/test_cosine_similarity.s"
