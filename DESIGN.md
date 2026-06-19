@@ -273,3 +273,23 @@ Initial synchronous `Index::search()` baseline for dimension `768` and
 
 These are local development baselines for tracking Phase 3 changes. They are
 not final throughput claims or comparisons against production libraries.
+
+### Index Serialization
+
+`Index::save()` writes the normalized corpus to disk in a simple binary format:
+
+```text
+magic: "CURAGIDN"
+version: uint32
+dim: int32
+num_vectors: int32
+corpus: float32[num_vectors * dim]
+```
+
+The stored corpus is already L2-normalized because normalization happens during
+`Index::build()`. `Index::load()` validates the magic bytes, version,
+dimension, and vector count before copying the corpus back to GPU memory.
+
+This format is intentionally minimal for Phase 3. It does not include metadata
+such as document IDs, embedding model information, endianness markers, or
+checksums.

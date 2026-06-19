@@ -132,6 +132,59 @@ namespace curag
         return result;
     }
 
+    BatchSearchResult Index::search_batch(const float *queries, int num_queries, int k) const{
+        if (!is_built())
+        {
+            throw std::runtime_error("Index must be built before batch search");
+        }
+
+        if (queries == nullptr)
+        {
+            throw std::runtime_error("queries must not be null");
+        }
+
+        if (num_queries <= 0)
+        {
+            throw std::runtime_error("num_queries must be positive");
+        }
+
+        if (k <= 0)
+        {
+            throw std::runtime_error("k must be positive");
+        }
+
+        if (k > num_vectors_)
+        {
+            throw std::runtime_error("k must be <= num_vectors");
+        }
+
+        BatchSearchResult batch;
+        batch.num_queries = num_queries;
+        batch.k = k;
+
+        batch.values.resize(static_cast<std::size_t>(num_queries) * k);
+        batch.indices.resize(static_cast<std::size_t>(num_queries) * k);
+
+        for (int q = 0; q < num_queries; ++q)
+        {
+            const float *query =
+                queries + static_cast<std::size_t>(q) * dim_;
+
+            SearchResult result = search(query, k);
+
+            for (int j = 0; j < k; ++j)
+            {
+                std::size_t out_index =
+                    static_cast<std::size_t>(q) * k + j;
+
+                batch.values[out_index] = result.values[j];
+                batch.indices[out_index] = result.indices[j];
+            }
+        }
+
+        return batch;
+    }
+
     int Index::dim() const
     {
         return dim_;
@@ -262,5 +315,6 @@ namespace curag
 
         return index;
     }
+
 
 } // namespace curag

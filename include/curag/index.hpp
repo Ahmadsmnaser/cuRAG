@@ -6,20 +6,28 @@
 
 namespace curag
 {
-
     struct SearchResult
     {
         std::vector<float> values;
         std::vector<int> indices;
     };
 
+    struct BatchSearchResult
+    {
+        std::vector<float> values;
+        std::vector<int> indices;
+        int num_queries;
+        int k;
+    };
+
+    
     class Index
     {
     public:
         explicit Index(int dim); // Constructor that initializes the index with the specified dimensionality
-        ~Index() = default; // DeviceBuffer members release their allocations.
+        ~Index() = default;      // DeviceBuffer members release their allocations.
 
-        Index(const Index &) = delete; // Delete copy constructor to prevent copying of the index
+        Index(const Index &) = delete;            // Delete copy constructor to prevent copying of the index
         Index &operator=(const Index &) = delete; // Delete copy assignment operator to prevent copying of the index
 
         Index(Index &&other) noexcept = default;
@@ -32,6 +40,7 @@ namespace curag
         void save(const std::string &path) const;
         static Index load(const std::string &path);
 
+        BatchSearchResult search_batch(const float *queries, int num_queries, int k) const;
         int dim() const;
         int num_vectors() const;
         bool is_built() const;

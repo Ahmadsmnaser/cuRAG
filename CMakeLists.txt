@@ -139,3 +139,14 @@ add_test(
     NAME index_save_load
     COMMAND test_index_save_load
 )
+
+add_executable(test_index_batch
+    tests/test_index_batch.cpp
+)
+
+target_link_libraries(test_index_batch PRIVATE curag)
+
+add_test(
+    NAME index_batch
+    COMMAND test_index_batch
+)

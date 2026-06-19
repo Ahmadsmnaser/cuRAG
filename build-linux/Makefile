@@ -308,6 +308,19 @@ test_index_save_load/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_save_load.dir/build.make CMakeFiles/test_index_save_load.dir/build
 .PHONY : test_index_save_load/fast
 
+#=============================================================================
+# Target rules for targets named test_index_batch
+
+# Build rule for target.
+test_index_batch: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 test_index_batch
+.PHONY : test_index_batch
+
+# fast build rule for target.
+test_index_batch/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_batch.dir/build.make CMakeFiles/test_index_batch.dir/build
+.PHONY : test_index_batch/fast
+
 benchmarks/benchmark_cosine_similarity.o: benchmarks/benchmark_cosine_similarity.cpp.o
 .PHONY : benchmarks/benchmark_cosine_similarity.o
 
@@ -596,6 +609,30 @@ tests/test_index.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index.dir/build.make CMakeFiles/test_index.dir/tests/test_index.cpp.s
 .PHONY : tests/test_index.cpp.s
 
+tests/test_index_batch.o: tests/test_index_batch.cpp.o
+.PHONY : tests/test_index_batch.o
+
+# target to build an object file
+tests/test_index_batch.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_batch.dir/build.make CMakeFiles/test_index_batch.dir/tests/test_index_batch.cpp.o
+.PHONY : tests/test_index_batch.cpp.o
+
+tests/test_index_batch.i: tests/test_index_batch.cpp.i
+.PHONY : tests/test_index_batch.i
+
+# target to preprocess a source file
+tests/test_index_batch.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_batch.dir/build.make CMakeFiles/test_index_batch.dir/tests/test_index_batch.cpp.i
+.PHONY : tests/test_index_batch.cpp.i
+
+tests/test_index_batch.s: tests/test_index_batch.cpp.s
+.PHONY : tests/test_index_batch.s
+
+# target to generate assembly for a file
+tests/test_index_batch.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test_index_batch.dir/build.make CMakeFiles/test_index_batch.dir/tests/test_index_batch.cpp.s
+.PHONY : tests/test_index_batch.cpp.s
+
 tests/test_index_save_load.o: tests/test_index_save_load.cpp.o
 .PHONY : tests/test_index_save_load.o
 
@@ -734,6 +771,7 @@ help:
 	@echo "... test_cosine_similarity"
 	@echo "... test_device_buffer"
 	@echo "... test_index"
+	@echo "... test_index_batch"
 	@echo "... test_index_save_load"
 	@echo "... test_normalize"
 	@echo "... test_search_pipeline"
@@ -775,6 +813,9 @@ help:
 	@echo "... tests/test_index.o"
 	@echo "... tests/test_index.i"
 	@echo "... tests/test_index.s"
+	@echo "... tests/test_index_batch.o"
+	@echo "... tests/test_index_batch.i"
+	@echo "... tests/test_index_batch.s"
 	@echo "... tests/test_index_save_load.o"
 	@echo "... tests/test_index_save_load.i"
 	@echo "... tests/test_index_save_load.s"
