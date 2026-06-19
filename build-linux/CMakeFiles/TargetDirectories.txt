@@ -13,6 +13,7 @@
 /home/ahmad/cuRAG/build-linux/CMakeFiles/benchmark_index_search.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/test_index_save_load.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/test_index_batch.dir
+/home/ahmad/cuRAG/build-linux/CMakeFiles/benchmark_index_batch.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/test.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/edit_cache.dir
 /home/ahmad/cuRAG/build-linux/CMakeFiles/rebuild_cache.dir

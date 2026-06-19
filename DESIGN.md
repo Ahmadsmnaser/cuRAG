@@ -240,8 +240,9 @@ query host-to-device copy
 -> K values and K indices copied back to the host
 ```
 
-The current implementation is deliberately synchronous. CUDA streams,
-multi-query batching, persistence, and further temporary-buffer reuse remain
+The current implementation is deliberately synchronous. The first batch API
+is implemented as a sequential wrapper around `Index::search()`; CUDA streams,
+true multi-query GPU batching, and further temporary-buffer reuse remain
 Phase 3 work.
 
 ### Synchronous Index Search Baseline
@@ -273,6 +274,42 @@ Initial synchronous `Index::search()` baseline for dimension `768` and
 
 These are local development baselines for tracking Phase 3 changes. They are
 not final throughput claims or comparisons against production libraries.
+
+### Batch Search Version 1 Baseline
+
+The first `Index::search_batch()` implementation is a correctness-oriented API
+baseline. It loops over the input queries, calls synchronous `Index::search()`
+for each query, and packs the individual results into one `BatchSearchResult`.
+It does not yet batch query transfers, execute multi-query kernels, overlap
+work with CUDA streams, or reduce the number of per-query synchronizations.
+
+`benchmark_index_batch` compares this first batch implementation with an
+explicit loop of repeated `Index::search()` calls over the same `100` queries.
+Both paths use host wall-clock timing and include the complete synchronous
+search cost.
+
+Run it with:
+
+```bash
+cmake -S . -B build-linux
+cmake --build build-linux --target benchmark_index_batch
+./build-linux/benchmark_index_batch
+```
+
+Initial local baseline for dimension `768` and `K = 10`:
+
+| Corpus vectors | Method | Total time | Latency | Throughput | Relative speedup |
+| ---: | --- | ---: | ---: | ---: | ---: |
+| 10,000 | Repeated `search()` | 528.842 ms | 5.288 ms/query | 189.093 queries/sec | 1.000x |
+| 10,000 | `search_batch()` v1 | 503.015 ms | 5.030 ms/query | 198.801 queries/sec | 1.051x |
+| 100,000 | Repeated `search()` | 2,897.335 ms | 28.973 ms/query | 34.514 queries/sec | 1.000x |
+| 100,000 | `search_batch()` v1 | 3,027.159 ms | 30.272 ms/query | 33.034 queries/sec | 0.957x |
+
+The two methods have effectively equivalent performance because they execute
+the same per-query search path. The small differences are normal run-to-run
+variation and host-side result-packing overhead, not evidence of GPU batching.
+These measurements establish the baseline that a future stream-based or
+multi-query kernel implementation must improve.
 
 ### Index Serialization
 

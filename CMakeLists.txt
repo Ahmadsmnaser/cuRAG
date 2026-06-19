@@ -150,3 +150,9 @@ add_test(
     NAME index_batch
     COMMAND test_index_batch
 )
+
+add_executable(benchmark_index_batch
+    benchmarks/benchmark_index_batch.cpp
+)
+
+target_link_libraries(benchmark_index_batch PRIVATE curag)
