@@ -359,3 +359,83 @@ dimension, and vector count before copying the corpus back to GPU memory.
 This format is intentionally minimal for Phase 3. It does not include metadata
 such as document IDs, embedding model information, endianness markers, or
 checksums.
+
+## Phase 4 - Python Bindings
+
+The Python extension is implemented with pybind11 and packaged with
+scikit-build-core. An editable installation builds the CUDA-backed extension
+module and exposes the C++ `Index` class as `curag.Index`.
+
+The current Python API accepts NumPy arrays with these logical shapes:
+
+```text
+Index.build(corpus)          corpus:  [num_vectors, dim]
+Index.search(query, k)       query:   [dim]
+Index.search_batch(q, k)     queries: [num_queries, dim]
+```
+
+Single and batch searches return dictionaries containing `values` and
+`indices`. Batch results also include `num_queries` and `k`. Index `save()` and
+the static `Index.load()` method are exposed directly.
+
+### Python Binding Tests
+
+The Python test suite covers index construction, single-query search, batch
+search, save/load round trips, invalid array rank, and dimension mismatch.
+
+Run it with:
+
+```bash
+python3 -m pytest python_tests/test_python_bindings.py -q
+```
+
+Current result:
+
+```text
+5 passed
+```
+
+### Python Binding Benchmark
+
+`benchmark_python_bindings.py` measures the public Python API with
+`time.perf_counter()`. Corpus and query generation occur before timing. Build
+time includes corpus host-to-device transfer, GPU normalization, and
+synchronization. Search timings include Python-to-C++ binding overhead and the
+complete synchronous search path.
+
+Run it with:
+
+```bash
+python3 benchmarks/benchmark_python_bindings.py
+```
+
+Initial local results for dimension `768`, `K = 10`, and `100` queries:
+
+| Corpus vectors | Build time | Method | Total search time | Latency | Relative speedup |
+| ---: | ---: | --- | ---: | ---: | ---: |
+| 10,000 | 2,446.697 ms | Repeated `search()` | 319.269 ms | 3.193 ms/query | 1.000x |
+| 10,000 | 2,446.697 ms | `search_batch()` | 181.258 ms | 1.813 ms/query | 1.761x |
+| 100,000 | 155.565 ms | Repeated `search()` | 2,843.003 ms | 28.430 ms/query | 1.000x |
+| 100,000 | 155.565 ms | `search_batch()` | 1,760.193 ms | 17.602 ms/query | 1.615x |
+
+The first `10,000`-vector build is the first CUDA operation in the benchmark
+process and likely includes CUDA context initialization. Its build time should
+not be compared directly with the later `100,000`-vector build as a corpus-size
+scaling result. A future benchmark should perform an explicit CUDA warmup and
+report multiple build iterations.
+
+The Python batch speedups are consistent with the C++ batch benchmark and come
+from batched query transfer, normalization, and cosine-similarity execution.
+Top-K still launches the single-query Top-K path once per query.
+
+### Current Binding Limits
+
+- CUDA calls execute while the Python GIL is held; GIL release remains to be
+  added around long-running build and search operations.
+- NumPy arguments use pybind11 `forcecast`, so incompatible dtypes and
+  non-contiguous inputs may be copied into temporary contiguous `float32`
+  arrays instead of being rejected.
+- Search outputs are currently converted to Python lists inside dictionaries,
+  rather than returned as shaped NumPy arrays.
+- PyTorch tensor interoperability and zero-copy device input are not yet
+  implemented.
