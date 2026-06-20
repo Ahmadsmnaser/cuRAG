@@ -1,2 +1,24 @@
+# Python virtual environments
+.venv/
+venv/
+env/
+
+# Python build artifacts
+__pycache__/
+*.py[cod]
+*.so
+*.egg-info/
+dist/
+build-python/
+_wheelhouse/
+
+# CMake / build
 build/
 build-*/
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+*.o
+*.a
+*.out

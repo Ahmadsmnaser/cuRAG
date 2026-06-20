@@ -1,0 +1,22 @@
+[build-system]
+requires = [
+    "scikit-build-core>=0.10",
+    "pybind11>=2.12"
+]
+build-backend = "scikit_build_core.build"
+
+[project]
+name = "curag"
+version = "0.1.0"
+description = "CUDA vector search library for RAG retrieval"
+requires-python = ">=3.9"
+dependencies = [
+    "numpy"
+]
+
+[tool.scikit-build]
+minimum-version = "0.10"
+build-dir = "build-python"
+
+[tool.scikit-build.cmake]
+build-type = "Release"

@@ -10,6 +10,9 @@ set(CMAKE_CUDA_STANDARD_REQUIRED ON)
 
 enable_testing()
 
+find_package(Python COMPONENTS Interpreter Development.Module REQUIRED)
+find_package(pybind11 CONFIG REQUIRED)
+
 add_library(curag STATIC
     kernels/cosine_similarity.cu
     kernels/normalize.cu
@@ -23,6 +26,7 @@ target_include_directories(curag PUBLIC include)
 
 set_target_properties(curag PROPERTIES
     CUDA_SEPARABLE_COMPILATION ON
+    POSITION_INDEPENDENT_CODE ON
 )
 
 add_executable(curag_demo
@@ -180,4 +184,18 @@ target_link_libraries(test_batched_topk PRIVATE curag)
 add_test(
     NAME batched_topk
     COMMAND test_batched_topk
+)
+
+pybind11_add_module(curag_python NO_EXTRAS
+    bindings/python_binding.cpp
+)
+
+target_link_libraries(curag_python PRIVATE curag)
+
+set_target_properties(curag_python PROPERTIES
+    OUTPUT_NAME curag
+)
+
+install(TARGETS curag_python
+    LIBRARY DESTINATION .
 )
