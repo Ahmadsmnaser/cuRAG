@@ -1,34 +1,38 @@
-# cuRAG
+# 🚀 cuRAG
 
-cuRAG is a CUDA vector search library built from scratch for learning and experimenting with retrieval backends used in RAG systems.
+**cuRAG** is a CUDA vector search library built from scratch for learning and experimenting with retrieval backends used in RAG systems.
 
 The goal of this project is not to replace FAISS, but to understand and implement the core GPU systems behind vector retrieval:
 
-- L2 normalization
-- Cosine similarity
-- Top-k selection
-- Reusable GPU memory management
-- Index build/search APIs
-- Batched query search
-- Python bindings
-- Minimal RAG-style retrieval demo
+- ⚙️ L2 normalization
+- 📐 Cosine similarity
+- 🔝 Top-k selection
+- 🧠 Reusable GPU memory management
+- 🧱 Index build/search APIs
+- ⚡ Batched query search
+- 🐍 Python bindings
+- 🔎 Minimal RAG-style retrieval demo
 
-## Status
+---
+
+## ✅ Status
 
 Current features:
 
-- CUDA cosine similarity kernel
-- CUDA L2 normalization kernel
-- GPU top-k selection
-- `curag::Index` C++ API
-- RAII GPU memory management with `DeviceBuffer`
-- Index save/load
-- Batched GPU search
-- Python bindings using pybind11
-- Python tests and benchmark
-- Minimal retrieval demo in Python
+- ✅ CUDA cosine similarity kernel
+- ✅ CUDA L2 normalization kernel
+- ✅ GPU top-k selection
+- ✅ `curag::Index` C++ API
+- ✅ RAII GPU memory management with `DeviceBuffer`
+- ✅ Index save/load
+- ✅ Batched GPU search
+- ✅ Python bindings using pybind11
+- ✅ Python tests and benchmark
+- ✅ Minimal retrieval demo in Python
 
-## Architecture
+---
+
+## 🏗️ Architecture
 
 ```text
 documents / vectors
@@ -58,7 +62,9 @@ batched top-k
 values[Q, K], indices[Q, K]
 ```
 
-## Repository Layout
+---
+
+## 📁 Repository Layout
 
 ```text
 include/curag/       Public C++ headers
@@ -71,14 +77,18 @@ python_tests/        Python binding tests
 examples/            Minimal RAG retrieval demo
 ```
 
-## Build C++/CUDA
+---
+
+## 🛠️ Build C++/CUDA
 
 ```bash
 cmake -S . -B build-linux
 cmake --build build-linux
 ```
 
-## Run C++ Tests
+---
+
+## 🧪 Run C++ Tests
 
 ```bash
 ctest --test-dir build-linux --output-on-failure
@@ -90,7 +100,9 @@ Expected result:
 100% tests passed
 ```
 
-## Python Installation
+---
+
+## 🐍 Python Installation
 
 Create a virtual environment:
 
@@ -117,7 +129,9 @@ Expected output:
 cuRAG CUDA vector search bindings
 ```
 
-## Python Usage
+---
+
+## 💻 Python Usage
 
 ```python
 import numpy as np
@@ -151,7 +165,9 @@ Example output:
 [0, 3]
 ```
 
-## Batched Search from Python
+---
+
+## ⚡ Batched Search from Python
 
 ```python
 import numpy as np
@@ -192,13 +208,17 @@ values[q * K + j]
 indices[q * K + j]
 ```
 
-## Python Tests
+---
+
+## 🧪 Python Tests
 
 ```bash
 python3 -m pytest python_tests -q
 ```
 
-## Minimal RAG Retrieval Demo
+---
+
+## 🔎 Minimal RAG Retrieval Demo
 
 ```bash
 python3 examples/rag_demo.py
@@ -222,30 +242,34 @@ Top retrieved documents:
 1. CUDA shared memory is fast on-chip memory used by threads inside the same block.
 ```
 
-## Benchmarks
+---
+
+## 📊 Benchmarks
 
 Local benchmark environment:
 
-- GPU: NVIDIA GeForce MX250
-- Dimension: 768
-- K: 10
-- Queries: 100
+- 🖥️ GPU: NVIDIA GeForce MX250
+- 📏 Dimension: 768
+- 🔝 K: 10
+- 🔁 Queries: 100
 
-### Python Binding Benchmark
+### 🐍 Python Binding Benchmark
 
 | Corpus vectors | Repeated search | Batched search | Speedup |
 | ---: | ---: | ---: | ---: |
 | 10,000 | 3.193 ms/query | 1.813 ms/query | 1.761x |
 | 100,000 | 28.430 ms/query | 17.602 ms/query | 1.615x |
 
-### C++ Batch Benchmark
+### ⚙️ C++ Batch Benchmark
 
 | Corpus vectors | Repeated search | Batched search | Speedup |
 | ---: | ---: | ---: | ---: |
 | 10,000 | 3.867 ms/query | 2.241 ms/query | 1.726x |
 | 100,000 | 28.206 ms/query | 17.719 ms/query | 1.592x |
 
-## Design Notes
+---
+
+## 🧩 Design Notes
 
 cuRAG stores vectors in row-major layout:
 
@@ -272,7 +296,9 @@ Examples:
 | 100 | 100,000 | ~40 MB |
 | 100 | 1,000,000 | ~400 MB |
 
-## Current Limitations
+---
+
+## ⚠️ Current Limitations
 
 - Exact brute-force search only
 - No IVF/HNSW/ANN index yet
@@ -282,7 +308,9 @@ Examples:
 - The minimal RAG demo uses toy embeddings, not real language model embeddings
 - No FAISS comparison benchmark yet
 
-## Future Work
+---
+
+## 🛣️ Future Work
 
 - Add real embedding demo with SentenceTransformers
 - Add FAISS comparison benchmark
@@ -292,14 +320,16 @@ Examples:
 - Add packaging wheels
 - Add LLM-based answer generation demo
 
-## Why This Project Exists
+---
+
+## 🎯 Why This Project Exists
 
 Most RAG demos use existing vector databases or libraries as black boxes. cuRAG is built to understand the retrieval backend itself:
 
-- How vectors are stored on GPU
-- How cosine similarity is computed at scale
-- How top-k retrieval works
-- How batching changes throughput
-- How a C++/CUDA backend can be exposed to Python
+- 🧠 How vectors are stored on GPU
+- ⚡ How cosine similarity is computed at scale
+- 🔝 How top-k retrieval works
+- 🚀 How batching changes throughput
+- 🐍 How a C++/CUDA backend can be exposed to Python
 
 This makes cuRAG a systems-focused learning project for GPU programming, vector search, and AI infrastructure.
